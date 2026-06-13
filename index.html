@@ -28,8 +28,8 @@ nav{position:fixed;top:32px;left:0;right:0;z-index:100;height:62px;display:flex;
 nav.scrolled{top:14px}
 nav .container{position:relative;display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1520px}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:#060217}
-.nav-logo svg{width:28px;height:28px;stroke:currentColor}
-.nav-wordmark{font-size:34px;font-weight:300;letter-spacing:-2.4px;line-height:1}
+.nav-logo svg{width:32px;height:32px;stroke:currentColor}
+.nav-wordmark{font-size:42px;font-weight:300;letter-spacing:-3.4px;line-height:.95}
 .nav-links{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;list-style:none;padding:7px;border:1px solid rgba(7,3,24,.06);border-radius:999px;background:rgba(255,255,255,.78);box-shadow:0 22px 70px rgba(17,17,30,.08);backdrop-filter:blur(22px) saturate(160%)}
 .nav-links a{display:flex;align-items:center;min-height:44px;padding:0 28px;border-radius:999px;font-size:16px;font-weight:500;color:rgba(9,5,26,.62);text-decoration:none;transition:color .2s,background .2s,box-shadow .2s}
 .nav-links li:first-child a{background:#07021a;color:#fff;box-shadow:0 16px 40px rgba(7,2,26,.18)}
@@ -42,9 +42,9 @@ nav .container{position:relative;display:flex;align-items:center;justify-content
 .btn-primary:active{transform:scale(.97)}
 
 /* ═══ HERO ═══ */
-.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:184px 24px 82px;position:relative;overflow:hidden;background:radial-gradient(circle at 12% 72%,rgba(122,234,220,.78) 0 18%,transparent 40%),radial-gradient(circle at 72% 12%,rgba(239,61,128,.72) 0 21%,transparent 44%),radial-gradient(circle at 88% 58%,rgba(250,213,100,.72) 0 20%,transparent 45%),radial-gradient(circle at 48% 92%,rgba(206,164,255,.58) 0 18%,transparent 42%),linear-gradient(135deg,#fbfff7 0%,#f4bea1 28%,#ee4d86 52%,#f1c36e 76%,#9debe2 100%);color:#060217}
-.hero::before{content:'';position:absolute;inset:-14%;background:linear-gradient(100deg,rgba(255,255,255,.82) 0%,rgba(255,255,255,.62) 24%,rgba(255,255,255,.08) 44%,rgba(255,255,255,.18) 60%,rgba(255,255,255,.66) 100%);clip-path:polygon(0 37%,18% 28%,40% 30%,58% 42%,73% 56%,100% 47%,100% 72%,77% 80%,56% 67%,36% 50%,15% 50%,0 61%);filter:blur(14px);opacity:.62;pointer-events:none}
-.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 28%,rgba(255,255,255,.58),transparent 34%),linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,.08));pointer-events:none}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:214px 24px 96px;position:relative;overflow:hidden;background:radial-gradient(circle at 18% 80%,rgba(213,244,250,.52) 0 23%,transparent 49%),radial-gradient(circle at 71% 45%,rgba(255,232,239,.38) 0 18%,transparent 44%),linear-gradient(180deg,#f8f8f9 0%,#fff 48%,#f7fbfc 100%);color:#060217}
+.hero::before{content:'';position:absolute;z-index:0;left:-9%;top:21%;width:70%;height:78%;background:linear-gradient(112deg,rgba(222,247,252,.88) 0%,rgba(255,255,255,.96) 42%,rgba(245,226,224,.46) 66%,rgba(255,255,255,.84) 100%);clip-path:polygon(0 19%,17% 5%,34% 4%,50% 13%,67% 35%,90% 62%,100% 82%,75% 85%,49% 70%,29% 58%,8% 56%,0 49%);filter:blur(1px);box-shadow:36px 42px 76px rgba(109,137,146,.18),inset 0 20px 48px rgba(255,255,255,.88),inset 0 -36px 64px rgba(188,222,234,.28);opacity:.88;pointer-events:none}
+.hero::after{content:'';position:absolute;z-index:0;right:-10%;top:34%;width:66%;height:49%;background:linear-gradient(101deg,rgba(255,255,255,.92) 0%,rgba(236,245,249,.84) 39%,rgba(255,238,244,.54) 69%,rgba(255,255,255,.95) 100%);clip-path:polygon(0 22%,22% 10%,43% 15%,61% 33%,79% 50%,100% 44%,100% 72%,83% 83%,60% 76%,39% 57%,18% 43%,0 38%);filter:blur(1.4px);box-shadow:-34px 34px 72px rgba(119,119,129,.17),inset 0 18px 42px rgba(255,255,255,.94),inset 0 -24px 54px rgba(230,228,231,.52);opacity:.9;pointer-events:none}
 .hero>*{position:relative;z-index:2}
 .hero-badge{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border:1px solid rgba(7,2,26,.06);border-radius:13px;font-size:18px;font-weight:600;color:#08031a;margin-bottom:34px;background:rgba(255,255,255,.82);box-shadow:0 18px 44px rgba(7,2,26,.08);backdrop-filter:blur(16px);opacity:0;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .1s forwards}
 .hero-badge-dot{width:24px;height:24px;border:1.6px solid #08031a;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;margin-left:0;animation:none}
@@ -58,17 +58,17 @@ nav .container{position:relative;display:flex;align-items:center;justify-content
 @keyframes wordReveal{to{opacity:1;transform:translateY(0) rotateX(0)}}
 .hero h1 .thin{font-weight:400;color:#07021a}
 .parallax-layer{transition:transform .25s cubic-bezier(.25,.46,.45,.94);will-change:transform}
-.hero-sub{font-size:21px;color:rgba(7,2,26,.74);max-width:830px;line-height:1.45;margin-top:32px;letter-spacing:-.45px;opacity:0;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .68s forwards}
-.hero-prompt{width:min(100%,980px);min-height:214px;margin-top:56px;border:1px solid rgba(7,2,26,.08);border-radius:26px;background:rgba(255,255,255,.78);box-shadow:0 26px 80px rgba(7,2,26,.1),inset 0 1px 0 rgba(255,255,255,.82);backdrop-filter:blur(18px) saturate(150%);padding:30px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;animation:fadeUp .75s cubic-bezier(.16,1,.3,1) .82s forwards}
+.hero-sub{font-size:21px;color:rgba(7,2,26,.78);max-width:840px;line-height:1.48;margin-top:32px;letter-spacing:-.45px;opacity:0;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .68s forwards}
+.hero-prompt{width:min(100%,920px);min-height:206px;margin-top:56px;border:1px solid rgba(7,2,26,.1);border-radius:26px;background:rgba(255,255,255,.76);box-shadow:0 24px 70px rgba(15,15,35,.07),inset 0 1px 0 rgba(255,255,255,.96),0 0 0 2px rgba(232,244,250,.4);backdrop-filter:blur(18px) saturate(150%);padding:28px;display:flex;flex-direction:column;justify-content:space-between;opacity:0;animation:fadeUp .75s cubic-bezier(.16,1,.3,1) .82s forwards}
 .hero-prompt-text{width:100%;min-height:72px;text-align:left;border:0;background:transparent;resize:none;outline:none;font:500 19px/1.5 var(--font);color:#07021a}
 .hero-prompt-text::placeholder{color:rgba(7,2,26,.62)}
 .hero-prompt-bar{display:flex;align-items:center;gap:16px;margin-top:28px}
 .hero-round,.hero-submit{width:56px;height:56px;border-radius:50%;border:1px solid rgba(7,2,26,.12);background:rgba(255,255,255,.8);display:inline-flex;align-items:center;justify-content:center;color:#07021a;text-decoration:none}
 .hero-chip{height:56px;padding:0 27px;border-radius:999px;border:1px solid rgba(7,2,26,.12);background:rgba(255,255,255,.66);display:inline-flex;align-items:center;gap:12px;color:#07021a;text-decoration:none;font-size:18px;font-weight:500}
 .hero-submit{margin-left:auto;background:#07021a;color:#fff;border-color:#07021a}
-.hero-suggestions{width:min(100%,980px);display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;opacity:0;animation:fadeUp .75s cubic-bezier(.16,1,.3,1) 1s forwards}
-.hero-suggestion{min-height:146px;border:1px solid rgba(7,2,26,.12);border-radius:17px;background:rgba(255,255,255,.54);box-shadow:0 18px 50px rgba(7,2,26,.06);padding:20px;text-align:left;color:#161224;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;backdrop-filter:blur(14px)}
-.hero-suggestion span{font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.25px}
+.hero-suggestions{width:min(100%,920px);display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:52px;opacity:0;animation:fadeUp .75s cubic-bezier(.16,1,.3,1) 1s forwards}
+.hero-suggestion{min-height:144px;border:1px solid rgba(7,2,26,.16);border-radius:14px;background:rgba(255,255,255,.62);box-shadow:0 15px 46px rgba(15,15,35,.045);padding:16px 16px 18px;text-align:left;color:#161224;text-decoration:none;display:flex;flex-direction:column;justify-content:space-between;backdrop-filter:blur(14px)}
+.hero-suggestion span{font-size:15px;font-weight:500;line-height:1.42;letter-spacing:-.25px}
 .hero-suggestion svg{width:24px;height:24px;stroke:#07021a}
 .hero .display-wrap{display:none}
 .hero-cta{display:flex;align-items:center;gap:16px;margin-top:40px;opacity:0;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .82s forwards}
@@ -758,7 +758,7 @@ footer .container{display:flex;align-items:center;justify-content:space-between}
 <!-- NAV -->
 <nav id="mainNav">
   <div class="container">
-    <a href="#" class="nav-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M8 7 9.5 4h5L16 7"/><path d="m10 11 4 2.5-4 2.5z"/></svg><span class="nav-wordmark">Animave</span></a>
+    <a href="#" class="nav-logo"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M8 7 9.5 4h5L16 7"/><path d="m10 11 4 2.5-4 2.5z"/></svg><span class="nav-wordmark">ideo</span></a>
     <ul class="nav-links"><li><a href="#heroSection">Home</a></li><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#how">Animation</a></li><li><a href="#faq">Resources</a></li></ul>
     <div class="nav-actions"><a href="https://app.animave.com/login" class="btn-ghost" style="text-decoration:none">Log In</a><a href="https://app.animave.com/login" class="btn-primary" style="text-decoration:none">Try Demo</a></div>
     <button class="nav-mobile-btn" onclick="document.getElementById('mobileModal').classList.add('open')">Start Creating</button>
@@ -769,7 +769,7 @@ footer .container{display:flex;align-items:center;justify-content:space-between}
 <section class="hero" id="heroSection">
   <div class="hero-badge"><span class="hero-badge-dot"></span> Your AI Video Starts Here</div>
   <h1><span class="hero-word">Create Videos Instantly</span><br><span class="hero-word">with a</span> <span class="hero-word thin">Single Prompt</span></h1>
-  <p class="hero-sub parallax-layer" data-speed="1.6">Type your idea, and Animave instantly turns it into a realistic animated video. Preview in real-time, customize styles, and export with a single click.</p>
+  <p class="hero-sub parallax-layer" data-speed="1.6">Type your idea, and our AI instantly turns it into a realistic video. Preview in real-time, customize styles, and export with a single click—perfect for creators, marketers, and teams.</p>
   <form class="hero-prompt parallax-layer" data-speed="0.8" action="https://app.animave.com/login">
     <textarea class="hero-prompt-text" name="prompt" placeholder="Type your video idea here..."></textarea>
     <div class="hero-prompt-bar">
@@ -781,10 +781,10 @@ footer .container{display:flex;align-items:center;justify-content:space-between}
     </div>
   </form>
   <div class="hero-suggestions">
-    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make a cartoon video<br>for school kids</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 16c1.5 1 4.5 1 6 0"/></svg></a>
-    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make a promotional<br>video for business</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></a>
-    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Generate an office<br>presentation video</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="5" width="16" height="12" rx="2"/><path d="m8 14 3-3 2 2 3-5"/><path d="M12 17v3M9 20h6"/></svg></a>
-    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make a course lesson<br>video for tech</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 4h9a3 3 0 0 1 3 3v13H8a2 2 0 0 1-2-2z"/><path d="M8 18h10"/><path d="M9 7h5"/></svg></a>
+    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make A cartoon video<br>For school kids</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 16c1.5 1 4.5 1 6 0"/></svg></a>
+    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make A Promotional<br>video For Business</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="3" y="8" width="18" height="11" rx="2"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></a>
+    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Generate a office<br>presentation Video</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="4" y="5" width="16" height="12" rx="2"/><path d="m8 14 3-3 2 2 3-5"/><path d="M12 17v3M9 20h6"/></svg></a>
+    <a class="hero-suggestion" href="https://app.animave.com/login"><span>Make A Course lesion<br>Video for tech</span><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 4h9a3 3 0 0 1 3 3v13H8a2 2 0 0 1-2-2z"/><path d="M8 18h10"/><path d="M9 7h5"/></svg></a>
   </div>
 
   <!-- CINEMA DISPLAY -->
