@@ -82,19 +82,6 @@ section.block#formats { padding-top: 56px; }
 .hero-cta { display: flex; gap: 10px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
 .hero-note { margin-top: 16px; font-size: 13px; color: var(--fg-4); }
 
-/* showcase */
-.showcase { display: grid; grid-template-columns: 1.6fr 1fr; gap: 12px; margin-top: 72px; text-align: left; align-items: stretch; }
-.showcase .stack { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
-.tile { position: relative; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface-2); }
-.tile video, .tile img { width: 100%; height: 100%; object-fit: cover; }
-/* the big tile keeps the video's own 16:9 (padding box: no aspect-ratio quirks); the stack fills its height */
-.showcase .big { height: 0; padding-top: 56.25%; }
-.showcase .big video { position: absolute; inset: 0; }
-.showcase .stack .tile { min-height: 0; }
-.showcase .stack .tile video { position: absolute; inset: 0; }
-.tile .tag { position: absolute; left: 14px; bottom: 14px; font-size: 12px; font-weight: 500; color: #fff; background: rgba(0,0,0,.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: 5px 11px; }
-.tile.light .tag { background: rgba(0,0,0,.72); }
-
 /* facts */
 .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 96px; }
 .fact { padding: 28px 24px; border-right: 1px solid var(--line); }
@@ -112,23 +99,25 @@ h2 .muted { color: var(--fg-4); }
 .head-row > div { flex: 1 1 auto; min-width: 0; }
 .head-row > .lead { flex: 0 0 380px; margin-top: 0; }
 
-/* formats */
-.formats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
-.card { display: flex; flex-direction: column; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface); transition: border-color .25s; }
-.card:hover { border-color: var(--line-3); }
-.card .media { position: relative; height: 230px; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--surface-2); }
-.card .media > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.16,1,.3,1); }
-.card:hover .media > * { transform: scale(1.035); }
-.card.wide .media { height: 320px; }
-.card .body { padding: 20px 22px 22px; display: flex; gap: 16px; align-items: flex-start; flex: 1; }
-.card h3 { font-size: 17px; font-weight: 600; letter-spacing: -.015em; }
-.card p { font-size: 14px; color: var(--fg-3); margin-top: 6px; line-height: 1.5; }
-.card .meta { font-size: 12.5px; color: var(--fg-4); margin-top: 14px; }
-.card .arrow { margin-left: auto; flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; color: var(--fg-3); transition: all .3s; }
-.card:hover .arrow { background: #fff; border-color: #fff; color: #000; }
-.card .arrow svg { width: 14px; height: 14px; }
-.span-3 { grid-column: span 3; } .span-2 { grid-column: span 2; }
-.formats-more { margin-top: 18px; font-size: 14px; color: var(--fg-3); }
+/* formats: alternating rows, a framed clip beside its description */
+.rows { display: flex; flex-direction: column; gap: 88px; }
+.row { display: grid; grid-template-columns: minmax(0, 520px) minmax(0, 1fr); align-items: center; gap: 72px; }
+.row:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); }
+.row:nth-child(even) .clip { order: 2; }
+.clip { position: relative; padding: 1.5px; border-radius: 18px; background: linear-gradient(135deg, #4f7cff 0%, #7b6cff 50%, #a35cff 100%);
+  box-shadow: 0 18px 60px -20px rgba(110, 96, 255, .45); }
+.clip .in { position: relative; height: 0; padding-top: 56.25%; border-radius: 16.5px; overflow: hidden; background: var(--surface-2); }
+.clip .in > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.row .txt { max-width: 440px; }
+.row:nth-child(even) .txt { justify-self: end; }
+.row .n { font-size: 13px; color: var(--fg-4); font-variant-numeric: tabular-nums; }
+.row h3 { font-size: 30px; font-weight: 600; letter-spacing: -.03em; margin-top: 10px; }
+.row p { font-size: 16px; color: var(--fg-3); line-height: 1.65; margin-top: 12px; }
+.row .meta { font-size: 13px; color: var(--fg-4); margin-top: 14px; }
+.row .go { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 14px; font-weight: 500; color: var(--fg); }
+.row .go svg { width: 14px; height: 14px; transition: transform .2s; }
+.row .go:hover svg { transform: translateX(3px); }
+.formats-more { margin-top: 72px; font-size: 14px; color: var(--fg-3); text-align: center; }
 .formats-more b { color: var(--fg); font-weight: 500; }
 
 /* photo → animation */
@@ -198,7 +187,7 @@ footer a:hover { color: var(--fg); }
 /* reveal (only when JS runs, so the page is complete without it) */
 .js .rv { opacity: 0; transform: translateY(24px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
 .js .rv.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; transform: none; transition: none; } .card .media > * { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; transform: none; transition: none; } }
 
 /* desktop-only notice */
 .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: flex-end; justify-content: center; background: rgba(0,0,0,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
@@ -210,15 +199,13 @@ footer a:hover { color: var(--fg); }
 
 @media (max-width: 960px) {
   .nav-links { display: none; }
-  .showcase { grid-template-columns: 1fr; }
-  .showcase .stack { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
-  .showcase .stack .tile { height: 180px; }
   .facts { grid-template-columns: repeat(2, 1fr); }
   .fact:nth-child(2) { border-right: 0; }
   .fact:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .formats { grid-template-columns: 1fr 1fr; }
-  .span-3, .span-2 { grid-column: span 1; }
-  .card.wide .media, .card .media { height: 220px; }
+  .row, .row:nth-child(even) { grid-template-columns: 1fr; gap: 28px; }
+  .row:nth-child(even) .clip { order: 0; }
+  .row:nth-child(even) .txt { justify-self: start; }
+  .rows { gap: 64px; }
   .transform { grid-template-columns: 1fr; }
   .transform .to { transform: rotate(90deg); justify-self: center; }
   .steps { grid-template-columns: 1fr; }
@@ -243,8 +230,7 @@ footer a:hover { color: var(--fg); }
   .fact { padding: 22px 16px; }
   .fact b { font-size: 21px; }
   .hero-sub { font-size: 16px; }
-  .showcase .stack { grid-template-columns: 1fr; }
-  .formats, .plans { grid-template-columns: 1fr; }
+  .plans { grid-template-columns: 1fr; }
   .plan:nth-child(odd) { border-right: 0; }
   .plan + .plan { border-top: 1px solid var(--line); }
   .nav-login { display: none; }
@@ -302,24 +288,6 @@ footer a:hover { color: var(--fg); }
       <button type="button" data-mode="motion">What is inflation, in 30 seconds</button>
     </div>
     <p class="hero-note rv">500 free credits when you sign up. No credit card.</p>
-
-    <p class="made rv">Made with Animave</p>
-    <div class="showcase rv" style="margin-top: 14px">
-      <div class="tile big">
-        <video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="metadata"></video>
-        <span class="tag">Motion Graphics</span>
-      </div>
-      <div class="stack">
-        <div class="tile">
-          <video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="metadata"></video>
-          <span class="tag">Animated Story</span>
-        </div>
-        <div class="tile light">
-          <video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="metadata"></video>
-          <span class="tag">Whiteboard</span>
-        </div>
-      </div>
-    </div>
   </div>
 </header>
 
@@ -343,32 +311,32 @@ footer a:hover { color: var(--fg); }
       <p class="lead rv">Every format is its own pipeline, tuned for one kind of video, from the script and the voice to the last cut.</p>
     </div>
 
-    <div class="formats">
-      <a class="card wide span-3 rv app-link" href="https://app.animave.com/login">
-        <div class="media"><img src="assets/realistic.webp" alt="" loading="lazy"></div>
-        <div class="body"><div><h3>Storytelling</h3><p>Narrated stories for YouTube, with cinematic scenes, camera moves and sound design.</p><p class="meta">1–10 min · narrated</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-      </a>
-      <a class="card wide span-3 rv app-link" href="https://app.animave.com/login">
-        <div class="media"><video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="none"></video></div>
-        <div class="body"><div><h3>Motion Graphics</h3><p>Kinetic type, charts and diagrams, animated in code and timed to the voice.</p><p class="meta">10–60 s · code-animated</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-      </a>
-      <a class="card span-2 rv app-link" href="https://app.animave.com/login">
-        <div class="media"><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="none"></video></div>
-        <div class="body"><div><h3>Animated Story</h3><p>Design one lead character and get a narrated, captioned short.</p><p class="meta">1–10 min · captions</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-      </a>
-      <a class="card span-2 rv app-link" href="https://app.animave.com/login">
-        <div class="media"><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></div>
-        <div class="body"><div><h3>Whiteboard</h3><p>Any topic, drawn line by line while a narrator explains it.</p><p class="meta">1–10 min · narrated</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-      </a>
-      <a class="card span-2 rv app-link" href="https://app.animave.com/login">
-        <div class="media"><img src="assets/western-cartoon.webp" alt="" loading="lazy"></div>
-        <div class="body"><div><h3>2D Animation</h3><p>Your own characters, scenes and dialogue, built shot by shot.</p><p class="meta">Scene by scene · dialogue</p></div>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
-      </a>
+    <div class="rows">
+      <div class="row rv">
+        <div class="clip"><div class="in"><img src="assets/realistic.webp" alt="A cinematic scene from a Storytelling video" loading="lazy"></div></div>
+        <div class="txt"><span class="n">01</span><h3>Storytelling</h3><p>Narrated stories for YouTube: cinematic scenes, slow camera moves and sound design, built from your premise and cut to the narrator.</p><p class="meta">1–10 min · narrated · 16:9 or 9:16</p>
+          <a class="go app-link" href="https://app.animave.com/login">Start with Storytelling<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="row rv">
+        <div class="clip"><div class="in"><video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="metadata"></video></div></div>
+        <div class="txt"><span class="n">02</span><h3>Motion Graphics</h3><p>Kinetic type, charts and diagrams, animated in code and timed to the voice, so every number lands on the word that says it.</p><p class="meta">10–60 s · code-animated</p>
+          <a class="go app-link" href="https://app.animave.com/login">Start with Motion Graphics<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="row rv">
+        <div class="clip"><div class="in"><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="txt"><span class="n">03</span><h3>Animated Story</h3><p>Design one lead character, then get a narrated, captioned short with that same character in every scene.</p><p class="meta">1–10 min · captions</p>
+          <a class="go app-link" href="https://app.animave.com/login">Start with Animated Story<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="row rv">
+        <div class="clip"><div class="in"><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="txt"><span class="n">04</span><h3>Whiteboard</h3><p>Any topic, drawn line by line on a clean board and coloured in while a narrator explains it.</p><p class="meta">1–10 min · narrated</p>
+          <a class="go app-link" href="https://app.animave.com/login">Start with Whiteboard<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
+      <div class="row rv">
+        <div class="clip"><div class="in"><img src="assets/western-cartoon.webp" alt="A 2D cartoon scene" loading="lazy"></div></div>
+        <div class="txt"><span class="n">05</span><h3>2D Animation</h3><p>Your own characters, scenes and dialogue, built shot by shot for a cartoon series or a short film.</p><p class="meta">Scene by scene · dialogue</p>
+          <a class="go app-link" href="https://app.animave.com/login">Start with 2D Animation<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      </div>
     </div>
     <p class="formats-more rv">Also in the studio: <b>Fruit Drama</b>, viral character shorts with dialogue, and <b>3D Render</b>, cinematic 3D explainers.</p>
   </div>
