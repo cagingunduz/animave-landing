@@ -53,6 +53,14 @@ nav .container { display: flex; align-items: center; height: 64px; gap: 32px; }
 h1 { font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -.04em; font-weight: 600; }
 .hero-sub { max-width: 560px; margin: 16px auto 0; font-size: 17px; line-height: 1.6; color: var(--fg-3); }
 
+/* dot field behind everything above the formats; dots near the cursor light up blue to violet */
+.dotzone { position: relative; padding-bottom: 72px; }
+.dotzone > :not(canvas) { position: relative; z-index: 1; }
+#dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 260px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 260px), transparent 100%); }
+section.block#formats { padding-top: 56px; }
+
 /* composer: the idea goes in here */
 .composer { max-width: 760px; margin: 40px auto 0; text-align: left; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 24px; transition: border-color .2s, box-shadow .2s; }
 .composer:focus-within { border-color: var(--line-3); box-shadow: 0 0 0 6px rgba(255,255,255,.03); }
@@ -267,6 +275,8 @@ footer a:hover { color: var(--fg); }
   </div>
 </nav>
 
+<div class="dotzone">
+<canvas id="dots" aria-hidden="true"></canvas>
 <header class="hero">
   <div class="container">
     <h1 class="rv">What's your next video about?</h1>
@@ -322,6 +332,7 @@ footer a:hover { color: var(--fg); }
     <div class="fact"><b>29</b><span>voice languages</span></div>
     <div class="fact"><b>∞</b><span>credits never expire</span></div>
   </div>
+</div>
 </div>
 
 <section class="block" id="formats">
@@ -522,6 +533,58 @@ footer a:hover { color: var(--fg); }
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     items.forEach(function (el) { io.observe(el); });
   } else { items.forEach(function (el) { el.classList.add('in'); }); }
+
+  // dot field: a quiet grid; within ~190px of the cursor dots grow and blend from blue to violet
+  (function () {
+    var zone = document.querySelector('.dotzone'), cv = document.getElementById('dots'), ctx = cv.getContext('2d');
+    var GAP = 22, R = 190, dpr = 1, w = 0, h = 0, dots = [];
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(hover: hover)').matches;
+    var target = { x: -9999, y: -9999 }, pos = { x: -9999, y: -9999 }, glow = 0, glowTo = 0, raf = 0;
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = zone.offsetWidth; h = zone.offsetHeight;
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dots = [];
+      var ox = (w % GAP) / 2 + GAP / 2;
+      for (var y = GAP / 2; y < h; y += GAP) for (var x = ox; x < w; x += GAP) dots.push(x, y);
+      draw();
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (var i = 0; i < dots.length; i += 2) {
+        var x = dots[i], y = dots[i + 1], dx = x - pos.x, dy = y - pos.y, d2 = dx * dx + dy * dy, k = 0;
+        if (glow > 0.01 && d2 < R * R) { k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow; }
+        if (k < 0.01) { ctx.fillStyle = 'rgba(255,255,255,0.11)'; ctx.fillRect(x - 1, y - 1, 2, 2); continue; }
+        // blue (left of the cursor) to violet (right of it)
+        var t = Math.max(0, Math.min(1, 0.5 + dx / (2 * R)));
+        var r = Math.round(79 + (157 - 79) * t), g = Math.round(124 + (92 - 124) * t), b = 255;
+        var a = 0.12 + 0.88 * Math.min(1, k * 1.25), s = 1 + 1.9 * k;
+        ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    function frame() {
+      pos.x += (target.x - pos.x) * 0.18; pos.y += (target.y - pos.y) * 0.18;
+      glow += (glowTo - glow) * 0.12;
+      draw();
+      var moving = Math.abs(target.x - pos.x) > 0.3 || Math.abs(target.y - pos.y) > 0.3 || Math.abs(glowTo - glow) > 0.01;
+      raf = moving ? requestAnimationFrame(frame) : 0;
+    }
+    function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+    if (!still) {
+      window.addEventListener('mousemove', function (e) {
+        var r = zone.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        var inside = y > -R && y < r.height + R;
+        if (inside) { if (glow < 0.01) { pos.x = x; pos.y = y; } target.x = x; target.y = y; }
+        glowTo = inside ? 1 : 0; kick();
+      }, { passive: true });
+      document.addEventListener('mouseleave', function () { glowTo = 0; kick(); });
+    }
+    window.addEventListener('resize', size);
+    if ('ResizeObserver' in window) new ResizeObserver(size).observe(zone);
+    size();
+  })();
 
   // composer: rotating example ideas as the placeholder, a format to start in, then on to the app
   var form = document.getElementById('composer'), idea = document.getElementById('idea'), send = form.querySelector('.send');
