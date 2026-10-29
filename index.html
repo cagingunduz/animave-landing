@@ -62,13 +62,13 @@ h1 { font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -.04e
 section.block#formats { padding-top: 56px; }
 
 /* composer: the idea goes in here */
-.composer { max-width: 620px; margin: 40px auto 0; text-align: left; background: rgba(255,255,255,.025); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line-2); border-radius: 22px; transition: border-color .2s, background .2s; }
+.composer { max-width: 560px; margin: 40px auto 0; text-align: left; background: rgba(255,255,255,.025); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line-2); border-radius: 22px; transition: border-color .2s, background .2s; }
 .composer:focus-within { border-color: var(--line-3); background: rgba(255,255,255,.04); }
-.composer textarea { display: block; width: 100%; min-height: 96px; resize: none; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 17px; line-height: 1.55; padding: 22px 24px 8px; }
+.composer textarea { display: block; width: 100%; min-height: 170px; resize: none; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 17px; line-height: 1.55; padding: 22px 24px 8px; }
 .composer textarea::placeholder { color: var(--fg-4); }
-.composer .bar { display: flex; align-items: center; gap: 10px; padding: 10px 12px 12px 16px; }
-.formats-pick { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
-.formats-pick button { font: inherit; font-size: 12.5px; color: var(--fg-3); background: rgba(15,15,16,.6); border: 1px solid var(--line-2); border-radius: 999px; height: 30px; padding: 0 11px; cursor: pointer; transition: all .15s; }
+.composer .bar { display: flex; align-items: center; gap: 6px; padding: 10px 10px 12px 12px; }
+.formats-pick { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+.formats-pick button { font: inherit; font-size: 12px; color: var(--fg-3); background: rgba(15,15,16,.6); border: 1px solid var(--line-2); border-radius: 999px; height: 29px; padding: 0 9px; cursor: pointer; transition: all .15s; }
 .formats-pick button:hover { color: var(--fg); border-color: var(--line-3); }
 .formats-pick button[aria-pressed="true"] { background: #fff; color: #000; border-color: #fff; }
 .send { width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: opacity .15s, transform .15s; }
@@ -235,7 +235,7 @@ footer a:hover { color: var(--fg); }
 }
 @media (max-width: 600px) {
   .hero { padding-top: 120px; }
-  .composer textarea { font-size: 16px; min-height: 96px; padding: 18px 18px 6px; }
+  .composer textarea { font-size: 16px; min-height: 140px; padding: 18px 18px 6px; }
   .formats-pick { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .formats-pick::-webkit-scrollbar { display: none; }
   .formats-pick button { flex-shrink: 0; }
@@ -560,11 +560,11 @@ footer a:hover { color: var(--fg); }
         var x = dots[i], y = dots[i + 1], dx = x - pos.x, dy = y - pos.y, d2 = dx * dx + dy * dy, k = 0;
         var behind = x > bx0 && x < bx1 && y > by0 && y < by1;
         if (glow > 0.01 && d2 < R * R && !behind) { k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow; }
-        if (k < 0.01) { ctx.fillStyle = 'rgba(255,255,255,0.11)'; ctx.fillRect(x - 1, y - 1, 2, 2); continue; }
+        if (k < 0.01) { ctx.fillStyle = 'rgba(255,255,255,0.11)'; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); continue; }
         // blue (left of the cursor) to violet (right of it)
         var t = Math.max(0, Math.min(1, 0.5 + dx / (2 * R)));
         var r = Math.round(79 + (157 - 79) * t), g = Math.round(124 + (92 - 124) * t), b = 255;
-        var a = 0.12 + 0.88 * Math.min(1, k * 1.25), s = 1 + 1.9 * k;
+        var a = 0.12 + 0.88 * Math.min(1, k * 1.25), s = 0.7 + 1.3 * k;
         ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + a.toFixed(3) + ')';
         ctx.beginPath(); ctx.arc(x, y, s, 0, Math.PI * 2); ctx.fill();
       }
