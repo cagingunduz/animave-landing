@@ -62,20 +62,19 @@ h1 { font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -.04e
 section.block#formats { padding-top: 56px; }
 
 /* composer: the idea goes in here */
-.composer { max-width: 560px; margin: 40px auto 0; text-align: left; background: rgba(255,255,255,.025); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line-2); border-radius: 22px; transition: border-color .2s, background .2s; }
+.composer { display: flex; align-items: flex-end; gap: 8px; max-width: 760px; margin: 40px auto 0; padding: 8px 8px 8px 0; text-align: left; background: rgba(255,255,255,.025); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line-2); border-radius: 28px; transition: border-color .2s, background .2s; }
 .composer:focus-within { border-color: var(--line-3); background: rgba(255,255,255,.04); }
-.composer textarea { display: block; width: 100%; min-height: 170px; resize: none; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 17px; line-height: 1.55; padding: 22px 24px 8px; }
+.composer textarea { display: block; flex: 1; min-width: 0; height: 40px; max-height: 168px; resize: none; overflow-y: auto; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16.5px; line-height: 24px; padding: 8px 4px 8px 22px; }
 .composer textarea::placeholder { color: var(--fg-4); }
-.composer .bar { display: flex; align-items: center; gap: 6px; padding: 10px 10px 12px 12px; }
-.formats-pick { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
-.formats-pick button { font: inherit; font-size: 12px; color: var(--fg-3); background: rgba(15,15,16,.6); border: 1px solid var(--line-2); border-radius: 999px; height: 29px; padding: 0 9px; cursor: pointer; transition: all .15s; }
+.formats-pick { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 760px; margin: 14px auto 0; }
+.formats-pick button { font: inherit; font-size: 12px; color: var(--fg-3); background: rgba(15,15,16,.6); border: 1px solid var(--line-2); border-radius: 999px; height: 30px; padding: 0 12px; cursor: pointer; transition: all .15s; }
 .formats-pick button:hover { color: var(--fg); border-color: var(--line-3); }
 .formats-pick button[aria-pressed="true"] { background: #fff; color: #000; border-color: #fff; }
 .send { width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: opacity .15s, transform .15s; }
 .send:disabled { opacity: .25; cursor: default; }
 .send:not(:disabled):hover { transform: scale(1.05); }
 .send svg { width: 18px; height: 18px; }
-.ideas { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 760px; margin: 18px auto 0; }
+.ideas { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 760px; margin: 22px auto 0; }
 .ideas button { font: inherit; font-size: 13px; color: var(--fg-3); background: rgba(15,15,16,.7); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; cursor: pointer; transition: all .15s; text-align: left; }
 .ideas button:hover { color: var(--fg); border-color: var(--line-3); background: rgba(255,255,255,.03); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -235,7 +234,8 @@ footer a:hover { color: var(--fg); }
 }
 @media (max-width: 600px) {
   .hero { padding-top: 120px; }
-  .composer textarea { font-size: 16px; min-height: 140px; padding: 18px 18px 6px; }
+  .composer textarea { font-size: 16px; padding-left: 18px; min-height: 64px; }
+  .formats-pick { justify-content: flex-start; }
   .formats-pick { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
   .formats-pick::-webkit-scrollbar { display: none; }
   .formats-pick button { flex-shrink: 0; }
@@ -284,20 +284,18 @@ footer a:hover { color: var(--fg); }
 
     <form class="composer rv" id="composer" action="https://app.animave.com/login" autocomplete="off">
       <label for="idea" class="sr-only">Your video idea</label>
-      <textarea id="idea" rows="3" placeholder="Explain how compound interest works in 60 seconds"></textarea>
-      <div class="bar">
-        <div class="formats-pick" role="group" aria-label="Format">
-          <button type="button" data-mode="story">Storytelling</button>
-          <button type="button" data-mode="motion">Motion Graphics</button>
-          <button type="button" data-mode="whiteboard">Whiteboard</button>
-          <button type="button" data-mode="animated">Animated Story</button>
-          <button type="button" data-mode="3d_render">3D Render</button>
-        </div>
-        <button class="send" type="submit" disabled aria-label="Create video">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-        </button>
-      </div>
+      <textarea id="idea" rows="1" placeholder="Explain how compound interest works in 60 seconds"></textarea>
+      <button class="send" type="submit" disabled aria-label="Create video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      </button>
     </form>
+    <div class="formats-pick rv" role="group" aria-label="Format">
+      <button type="button" data-mode="story">Storytelling</button>
+      <button type="button" data-mode="motion">Motion Graphics</button>
+      <button type="button" data-mode="whiteboard">Whiteboard</button>
+      <button type="button" data-mode="animated">Animated Story</button>
+      <button type="button" data-mode="3d_render">3D Render</button>
+    </div>
     <div class="ideas rv">
       <button type="button" data-mode="whiteboard">Why is the sky blue?</button>
       <button type="button" data-mode="story">A radio call from a ship lost 50 years ago</button>
@@ -608,13 +606,16 @@ footer a:hover { color: var(--fg); }
   setTimeout(tick, 2600);
   function setMode(m) {
     mode = m;
-    form.querySelectorAll('.formats-pick button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === m)); });
+    document.querySelectorAll('.formats-pick button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === m)); });
   }
-  form.querySelectorAll('.formats-pick button').forEach(function (b) {
+  document.querySelectorAll('.formats-pick button').forEach(function (b) {
     b.setAttribute('aria-pressed', 'false');
     b.addEventListener('click', function () { setMode(mode === b.dataset.mode ? null : b.dataset.mode); });
   });
-  function sync() { send.disabled = !idea.value.trim(); }
+  function sync() {
+    send.disabled = !idea.value.trim();
+    idea.style.height = 'auto'; idea.style.height = Math.min(idea.scrollHeight, 168) + 'px';
+  }
   idea.addEventListener('input', sync);
   idea.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!send.disabled) form.requestSubmit(); } });
   document.querySelectorAll('.ideas button').forEach(function (b) {
