@@ -522,12 +522,21 @@ footer a:hover { color: var(--fg); }
   } else { items.forEach(function (el) { el.classList.add('in'); }); }
 
   // dot field behind the whole page: a quiet grid that scrolls with the content; within ~190px of
-  // the cursor dots grow and blend from blue to violet. Dots behind the see-through composer stay still.
+  // the cursor dots grow and blend from blue to violet. Dots behind the see-through composer stay still,
+  // and under running text the glow is kept faint so the words stay easy to read.
   (function () {
     var cv = document.getElementById('dots'), ctx = cv.getContext('2d'), box = document.getElementById('composer');
     var GAP = 22, R = 190, dpr = 1, w = 0, h = 0;
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !window.matchMedia('(hover: hover)').matches;
     var target = { x: -9999, y: -9999 }, pos = { x: -9999, y: -9999 }, glow = 0, glowTo = 0, raf = 0, dirty = false;
+    var TEXT = 'h1, h2, h3, p, li, summary, .kicker, .fact, .you, .formats-pick, .ideas', textRects = [];
+    function measureText() {  // page coordinates, refreshed on layout changes only
+      var sy = window.scrollY; textRects = [];
+      document.querySelectorAll(TEXT).forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width && r.height) textRects.push([r.left - 6, r.top + sy - 4, r.right + 6, r.bottom + sy + 4]);
+      });
+    }
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = window.innerWidth; h = window.innerHeight;
@@ -537,13 +546,22 @@ footer a:hover { color: var(--fg); }
     }
     function draw() {
       ctx.clearRect(0, 0, w, h);
-      var br = box.getBoundingClientRect();
+      var br = box.getBoundingClientRect(), sy = window.scrollY;
       var bx0 = br.left - 4, bx1 = br.right + 4, by0 = br.top - 4, by1 = br.bottom + 4;
-      var ox = (w % GAP) / 2 + GAP / 2, oy = GAP / 2 - (window.scrollY % GAP);
+      var ox = (w % GAP) / 2 + GAP / 2, oy = GAP / 2 - (sy % GAP);
+      // text blocks near the cursor, in viewport coordinates
+      var near = [];
+      if (glow > 0.01) for (var j = 0; j < textRects.length; j++) {
+        var q = textRects[j], top = q[1] - sy, bot = q[3] - sy;
+        if (bot > pos.y - R && top < pos.y + R && q[2] > pos.x - R && q[0] < pos.x + R) near.push([q[0], top, q[2], bot]);
+      }
       for (var y = oy; y < h + GAP; y += GAP) {
         for (var x = ox; x < w; x += GAP) {
           var dx = x - pos.x, dy = y - pos.y, d2 = dx * dx + dy * dy, k = 0;
-          if (glow > 0.01 && d2 < R * R && !(x > bx0 && x < bx1 && y > by0 && y < by1)) { k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow; }
+          if (glow > 0.01 && d2 < R * R && !(x > bx0 && x < bx1 && y > by0 && y < by1)) {
+            k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow;
+            for (var m = 0; m < near.length; m++) { var n = near[m]; if (x > n[0] && x < n[2] && y > n[1] && y < n[3]) { k *= 0.22; break; } }
+          }
           if (k < 0.01) { ctx.fillStyle = 'rgba(255,255,255,0.11)'; ctx.fillRect(x - 0.7, y - 0.7, 1.4, 1.4); continue; }
           var t = Math.max(0, Math.min(1, 0.5 + dx / (2 * R)));  // blue left of the cursor, violet right of it
           var r = Math.round(79 + (157 - 79) * t), g = Math.round(124 + (92 - 124) * t);
@@ -569,8 +587,11 @@ footer a:hover { color: var(--fg); }
       }, { passive: true });
       document.addEventListener('mouseleave', function () { glowTo = 0; kick(); });
     }
-    window.addEventListener('resize', size);
-    size();
+    window.addEventListener('resize', function () { size(); measureText(); });
+    if ('ResizeObserver' in window) new ResizeObserver(measureText).observe(document.body);
+    document.querySelectorAll('details').forEach(function (d) { d.addEventListener('toggle', measureText); });
+    window.addEventListener('load', measureText);
+    measureText(); size();
   })();
 
   // composer: rotating example ideas as the placeholder, a format to start in, then on to the app
