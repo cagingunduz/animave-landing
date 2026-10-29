@@ -550,11 +550,16 @@ footer a:hover { color: var(--fg); }
       for (var y = GAP / 2; y < h; y += GAP) for (var x = ox; x < w; x += GAP) dots.push(x, y);
       draw();
     }
+    var box = document.getElementById('composer');
     function draw() {
       ctx.clearRect(0, 0, w, h);
+      // the composer is see-through: dots behind it stay still and grey
+      var zr = zone.getBoundingClientRect(), br = box.getBoundingClientRect();
+      var bx0 = br.left - zr.left - 4, bx1 = br.right - zr.left + 4, by0 = br.top - zr.top - 4, by1 = br.bottom - zr.top + 4;
       for (var i = 0; i < dots.length; i += 2) {
         var x = dots[i], y = dots[i + 1], dx = x - pos.x, dy = y - pos.y, d2 = dx * dx + dy * dy, k = 0;
-        if (glow > 0.01 && d2 < R * R) { k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow; }
+        var behind = x > bx0 && x < bx1 && y > by0 && y < by1;
+        if (glow > 0.01 && d2 < R * R && !behind) { k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow; }
         if (k < 0.01) { ctx.fillStyle = 'rgba(255,255,255,0.11)'; ctx.fillRect(x - 1, y - 1, 2, 2); continue; }
         // blue (left of the cursor) to violet (right of it)
         var t = Math.max(0, Math.min(1, 0.5 + dx / (2 * R)));
