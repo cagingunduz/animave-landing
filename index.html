@@ -59,9 +59,6 @@ h2 .muted { color: var(--fg-4); }
 
 /* dock: part of the page right under the first screen; it scrolls up with it and then sticks to the top */
 .dock { position: -webkit-sticky; position: sticky; top: 0; z-index: 60; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; isolation: isolate; }
-.dock::after { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 96px; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .4s;
-  background: linear-gradient(180deg, rgba(10,14,48,.96) 0, rgba(10,14,48,.9) 58%, rgba(10,14,48,0) 100%); }
-.dock.top::after { opacity: 1; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
 .logo svg { width: 24px; height: 24px; }
 .dock .links { display: flex; align-items: center; gap: 22px; list-style: none; font-size: 13.5px; color: rgba(255,255,255,.82); }
