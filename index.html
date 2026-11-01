@@ -23,7 +23,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { position: relative; background: var(--bg); color: var(--fg); font-family: Inter, system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.5;
-  -webkit-font-smoothing: antialiased; font-feature-settings: 'cv11', 'ss01'; padding-bottom: 64px; }
+  -webkit-font-smoothing: antialiased; font-feature-settings: 'cv11', 'ss01'; }
 a { color: inherit; text-decoration: none; }
 img, video { display: block; max-width: 100%; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
@@ -52,13 +52,23 @@ img, video { display: block; max-width: 100%; }
 section { position: relative; }
 .sec { padding: 150px 0 0; }
 .sec-head { display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; margin-bottom: 64px; }
-.sec-head .stack { grid-column: 1 / span 4; }
-.sec-head .lead { grid-column: 5 / span 2; padding-bottom: 10px; }
+h2 { font-size: clamp(34px, 4.4vw, 54px); line-height: 1.04; letter-spacing: -.04em; font-weight: 600; }
+h2 .muted { color: var(--fg-4); }
+.sec-head > h2 { grid-column: 1 / span 4; }
+.sec-head > .lead, .sec-head > .side { grid-column: 5 / span 2; padding-bottom: 8px; }
+.sec-head .side .lead { margin-bottom: 22px; }
 
 /* dock: the menu lives at the bottom, over a blue glow */
-.dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; isolation: isolate; }
-.dock::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: -1; pointer-events: none;
+/* the dock sits at the bottom of the first screen and slides to the top once you scroll past it */
+.dock { position: fixed; left: 0; right: 0; top: 0; z-index: 60; height: 64px; transform: translateY(calc(100vh - 64px)); transform: translateY(calc(100dvh - 64px)); transition: transform .6s cubic-bezier(.16,1,.3,1); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; isolation: isolate; }
+.dock::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: -1; pointer-events: none; transition: opacity .4s;
   background: radial-gradient(70% 100% at 50% 100%, rgba(38,70,255,.95) 0%, rgba(38,70,255,.45) 38%, rgba(38,70,255,0) 78%); }
+.dock::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .4s;
+  background: linear-gradient(180deg, rgba(20,26,70,.92), rgba(15,15,16,.86)); backdrop-filter: saturate(150%) blur(14px); -webkit-backdrop-filter: saturate(150%) blur(14px);
+  border-bottom: 1px solid rgba(110,120,255,.28); box-shadow: 0 10px 40px -10px rgba(38,70,255,.45); }
+.dock.top { transform: translateY(0); }
+.dock.top::before { opacity: 0; }
+.dock.top::after { opacity: 1; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
 .logo svg { width: 24px; height: 24px; }
 .dock .links { display: flex; align-items: center; gap: 22px; list-style: none; font-size: 13.5px; color: rgba(255,255,255,.82); }
@@ -92,60 +102,36 @@ section { position: relative; }
 .vision .blurb { position: absolute; z-index: 2; left: calc(50% + clamp(180px, 15vw, 215px)); top: calc(4vh + clamp(250px, 32vw, 400px) + 70px); max-width: 240px; }
 .vision .blurb p { font-size: 16px; line-height: 1.45; color: rgba(255,255,255,.88); margin-bottom: 18px; }
 
-/* 2 — ask: one sentence */
-.ask { text-align: center; padding-top: 110px; --s: clamp(64px, 8vw, 120px); --t: clamp(46px, 6.2vw, 96px); }
-.composer { display: flex; align-items: flex-end; gap: 8px; max-width: 760px; margin: 48px auto 0; padding: 8px 8px 8px 0; text-align: left;
-  background: rgba(255,255,255,.025); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line-2); border-radius: 28px; transition: border-color .2s, background .2s; }
-.composer:focus-within { border-color: var(--line-3); background: rgba(255,255,255,.04); }
-.composer textarea { display: block; flex: 1; min-width: 0; height: 40px; max-height: 168px; resize: none; overflow-y: auto; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16.5px; line-height: 24px; padding: 8px 4px 8px 22px; }
-.composer textarea::placeholder { color: var(--fg-4); }
-.send { width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: #000; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; transition: opacity .15s, transform .15s; }
-.send:disabled { opacity: .25; cursor: default; }
-.send:not(:disabled):hover { transform: scale(1.05); }
-.send svg { width: 18px; height: 18px; }
-/* format pills: a gradient shell with a solid inner pill, the same frame as the clips */
-.formats-pick { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; max-width: 760px; margin: 14px auto 0; }
-.formats-pick button { font: inherit; font-size: 12px; color: var(--fg-2); border: 0; border-radius: 999px; padding: 1px; cursor: pointer; background: var(--grad); transition: color .15s, box-shadow .15s; }
-.formats-pick button span { display: flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #141416; transition: background .15s; }
-.formats-pick button:hover { color: #fff; box-shadow: 0 4px 18px -8px rgba(123,108,255,.65); }
-.formats-pick button[aria-pressed="true"] { color: #fff; box-shadow: 0 6px 22px -8px rgba(123,108,255,.7); }
-.formats-pick button[aria-pressed="true"] span { background: transparent; }
-.ideas { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; max-width: 760px; margin: 22px auto 0; }
-.ideas button { font: inherit; font-size: 13px; color: var(--fg-3); background: rgba(15,15,16,.7); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px; cursor: pointer; transition: all .15s; }
-.ideas button:hover { color: var(--fg); border-color: var(--line-3); }
-.note { margin-top: 18px; font-size: 13px; color: var(--fg-4); }
-.facts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 110px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: left; }
-.facts div { padding: 30px 28px; }
-.facts div + div { border-left: 1px solid var(--line); }
-.facts b { display: block; font-family: var(--thin); font-weight: 200; font-size: 56px; line-height: 1; letter-spacing: -.01em; }
-.facts span { display: block; margin-top: 10px; font-size: 13px; color: var(--fg-3); }
-
-/* 3 — formats: an index, big thin names, a playing clip on the right, a large preview under the cursor */
-.flist { border-top: 1px solid var(--line); }
-.frow { display: grid; grid-template-columns: 80px minmax(0, 1fr) 300px 168px; align-items: center; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line); transition: background .3s; }
-.frow .no { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--fg-4); transition: color .3s; }
-.frow .nm { font-family: var(--thin); font-weight: 200; text-transform: uppercase; font-size: clamp(34px, 4.4vw, 64px); line-height: 1; letter-spacing: .005em; color: rgba(255,255,255,.62); transition: color .3s, letter-spacing .4s; }
-.frow .tg em { display: block; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--fg-2); }
-.frow .tg small { display: block; margin-top: 6px; font-size: 12.5px; color: var(--fg-4); }
-.frow .thumb { position: relative; display: block; width: 168px; height: 95px; padding: 1.5px; border-radius: 12px; background: var(--grad); }
-.frow .thumb video { width: 100%; height: 100%; object-fit: cover; border-radius: 10.5px; background: var(--surface-2); }
-.frow .thumb.soon { background: none; border: 1px dashed var(--line-2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--fg-3); }
-.frow:hover .nm { color: #fff; letter-spacing: .03em; }
-.frow:hover .no { color: #b4a8ff; }
-.preview { position: fixed; left: 0; top: 0; z-index: 40; width: 420px; aspect-ratio: 16 / 9; padding: 1.5px; border-radius: 18px; background: var(--grad); pointer-events: none;
-  opacity: 0; transform: translate3d(-9999px, 0, 0) scale(.92); transition: opacity .25s; box-shadow: 0 30px 80px -20px rgba(80,90,255,.55); }
-.preview video { width: 100%; height: 100%; object-fit: cover; border-radius: 16.5px; background: #000; }
-.preview.on { opacity: 1; }
+/* formats: a horizontal showcase of framed clips */
+.sec-head .nav { display: flex; gap: 8px; justify-content: flex-end; }
+.sec-head .nav button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,.02); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s, opacity .2s; }
+.sec-head .nav button:hover { border-color: var(--line-3); background: rgba(255,255,255,.06); }
+.sec-head .nav button:disabled { opacity: .3; cursor: default; }
+.sec-head .nav svg { width: 18px; height: 18px; }
+.showcase { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;
+  padding: 6px max(28px, calc((100vw - var(--max)) / 2 + 28px)) 40px; scroll-padding: 0 max(28px, calc((100vw - var(--max)) / 2 + 28px)); }
+.showcase::-webkit-scrollbar { display: none; }
+.fcard { flex: 0 0 auto; width: min(540px, 82vw); scroll-snap-align: start; }
+.fcard .frame .in { height: 0; padding-top: 56.25%; }
+.fcard .art { position: absolute; inset: 0; background: radial-gradient(60% 80% at 30% 30%, rgba(79,124,255,.35), transparent 70%), radial-gradient(60% 80% at 75% 70%, rgba(163,92,255,.35), transparent 70%), #121320;
+  display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: rgba(255,255,255,.75); }
+.fcard .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin-top: 20px; }
+.fcard .no { grid-row: span 3; font-size: 13px; color: #b4a8ff; font-variant-numeric: tabular-nums; padding-top: 4px; }
+.fcard h3 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.fcard p { font-size: 14.5px; color: var(--fg-3); line-height: 1.55; }
+.fcard small { font-size: 12.5px; color: var(--fg-4); }
+.fcard .frame { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
+.fcard:hover .frame { transform: translateY(-4px); box-shadow: 0 40px 90px -30px rgba(110,96,255,.7); }
 
 /* 4 — how it works: six stages on the six columns */
 .stages { display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--line); }
 .stage { padding: 30px 26px 0 0; }
 .stage + .stage { padding-left: 0; }
-.stage .sn { display: block; font-family: var(--serif); font-style: italic; font-size: 44px; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stage .sn { display: block; font-size: 15px; font-weight: 600; line-height: 1; letter-spacing: .02em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .stage h3 { font-size: 16px; font-weight: 600; letter-spacing: -.01em; margin-top: 26px; }
 .stage p { font-size: 13.5px; line-height: 1.6; color: var(--fg-3); margin-top: 8px; }
 .you { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 36px; margin-top: 72px; font-size: 15px; color: var(--fg-3); }
-.you em { font-family: var(--serif); font-style: italic; font-size: 22px; color: #fff; }
+.you em { font-style: normal; font-weight: 500; font-size: 15px; color: #fff; }
 .you span i { font-style: normal; color: #b4a8ff; margin-right: 8px; }
 
 /* 5 — your own series */
@@ -153,14 +139,14 @@ section { position: relative; }
 .series .copy { grid-column: 1 / span 2; padding-right: 28px; }
 .series ol { list-style: none; margin-top: 30px; display: grid; gap: 20px; counter-reset: s; }
 .series li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; font-size: 14.5px; color: var(--fg-3); line-height: 1.55; }
-.series li::before { content: counter(s, decimal-leading-zero); font-family: var(--serif); font-style: italic; color: #b4a8ff; font-size: 15px; }
+.series li::before { content: counter(s, decimal-leading-zero); color: #b4a8ff; font-size: 13px; padding-top: 2px; font-variant-numeric: tabular-nums; }
 .series li b { display: block; color: #fff; font-weight: 500; }
 .series .copy .arrow-link { margin-top: 30px; }
 .series .copy .fine { font-size: 12.5px; color: var(--fg-4); margin-top: 18px; }
 .frame { position: relative; padding: 1.5px; border-radius: 18px; background: var(--grad); box-shadow: 0 30px 80px -30px rgba(110,96,255,.5); }
 .frame .in { position: relative; border-radius: 16.5px; overflow: hidden; background: var(--surface-2); }
 .frame .in > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.frame .cap { position: absolute; left: 0; right: 0; top: calc(100% + 14px); font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--fg-2); }
+.frame .cap { position: absolute; left: 0; right: 0; top: calc(100% + 12px); font-size: 13px; color: var(--fg-3); }
 .series .f1 { grid-column: 3 / span 1; margin: 40px 14px 0; }
 .series .f1 .in { height: 330px; }
 .series .f2 { grid-column: 4 / span 1; margin: 120px 14px 0; }
@@ -175,10 +161,10 @@ section { position: relative; }
 .plan.hl::before { content: ''; position: absolute; inset: -1px 0 auto; height: 2px; background: var(--grad); }
 .plan.hl::after { content: ''; position: absolute; inset: 0; z-index: -1; background: radial-gradient(90% 60% at 50% 0%, rgba(38,70,255,.22), transparent 70%); }
 .pn { display: flex; align-items: center; justify-content: space-between; }
-.pn em { font-family: var(--serif); font-style: italic; font-size: 28px; }
+.pn em { font-style: normal; font-size: 15px; font-weight: 500; }
 .pop { font-size: 11.5px; padding: 3px 10px; border-radius: 999px; background: var(--grad); color: #fff; font-weight: 500; }
-.pp { font-family: var(--thin); font-weight: 200; font-size: 64px; line-height: 1; margin-top: 26px; letter-spacing: -.01em; }
-.pp small { font-family: Inter, sans-serif; font-size: 14px; color: var(--fg-4); margin-left: 6px; letter-spacing: 0; }
+.pp { font-size: 42px; font-weight: 600; line-height: 1; margin-top: 24px; letter-spacing: -.04em; }
+.pp small { font-size: 14px; font-weight: 400; color: var(--fg-4); margin-left: 6px; letter-spacing: 0; }
 .pd { font-size: 13.5px; color: var(--fg-3); margin-top: 10px; min-height: 42px; }
 .pm { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); min-height: 130px; }
 .pm p { font-size: 12px; color: var(--fg-4); margin-bottom: 8px; }
@@ -189,12 +175,12 @@ section { position: relative; }
 .plan li::before { content: '—'; color: #7b6cff; margin-right: 10px; }
 .plan .arrow-link { align-self: flex-start; }
 .packs { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; margin-top: 26px; font-size: 14px; color: var(--fg-3); }
-.packs em { font-family: var(--serif); font-style: italic; color: #fff; font-size: 18px; margin-right: 8px; }
+.packs em { font-style: normal; font-weight: 500; color: #fff; margin-right: 8px; }
 .packs .opts { display: flex; gap: 26px; flex-wrap: wrap; font-variant-numeric: tabular-nums; color: var(--fg-2); }
 
 /* 7 — questions */
 .faq { display: grid; grid-template-columns: repeat(6, 1fr); }
-.faq .stack { grid-column: 1 / span 2; }
+.faq > h2 { grid-column: 1 / span 2; }
 .faq .list { grid-column: 3 / span 4; }
 .faq details { border-top: 1px solid var(--line); }
 .faq details:last-child { border-bottom: 1px solid var(--line); }
@@ -207,7 +193,8 @@ section { position: relative; }
 .faq details p { font-size: 15px; color: var(--fg-3); line-height: 1.7; padding: 0 48px 26px 0; max-width: 720px; }
 
 /* 8 — closing */
-.closing { position: relative; text-align: center; padding: 180px 0 150px; overflow: hidden; --s: clamp(76px, 11vw, 176px); --t: clamp(52px, 8vw, 128px); }
+.closing { position: relative; text-align: center; padding: 170px 0 150px; overflow: hidden; }
+.closing h2 { font-size: clamp(40px, 6vw, 76px); }
 .closing::before { content: ''; position: absolute; left: 0; right: 0; bottom: -200px; height: 520px; z-index: -1; pointer-events: none;
   background: radial-gradient(40% 50% at 38% 50%, rgba(79,124,255,.16), transparent 70%), radial-gradient(40% 50% at 62% 50%, rgba(163,92,255,.16), transparent 70%); }
 .closing .acts { display: flex; gap: 28px; justify-content: center; align-items: center; margin-top: 48px; }
@@ -225,13 +212,11 @@ footer a:hover { color: var(--fg); }
 .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: flex-end; justify-content: center; background: rgba(0,0,0,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .modal.open { display: flex; }
 .modal .sheet { width: 100%; max-width: 480px; background: var(--surface-2); border: 1px solid var(--line-2); border-radius: 20px 20px 0 0; padding: 28px 24px 32px; }
-.modal h3 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; }
+.modal h3 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
 .modal p { color: var(--fg-3); margin: 8px 0 20px; font-size: 15px; }
 .modal .pill { width: 100%; justify-content: center; border: 0; cursor: pointer; font: inherit; font-weight: 500; }
 
 @media (max-width: 1100px) {
-  .frow { grid-template-columns: 56px minmax(0, 1fr) 168px; }
-  .frow .tg { display: none; }
   .stages { grid-template-columns: repeat(3, 1fr); row-gap: 40px; }
   .plans { grid-template-columns: 1fr 1fr; }
   .plan:nth-child(3) { border-left: 0; }
@@ -250,10 +235,8 @@ footer a:hover { color: var(--fg); }
   .dock { padding: 0 18px; }
   .sec { padding-top: 110px; }
   .sec-head { grid-template-columns: 1fr; gap: 24px; margin-bottom: 44px; }
-  .sec-head .stack, .sec-head .lead { grid-column: auto; }
-  .facts { grid-template-columns: 1fr 1fr; }
-  .facts div:nth-child(3) { border-left: 0; }
-  .facts div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .sec-head > h2, .sec-head > .lead, .sec-head > .side { grid-column: auto; }
+  .sec-head .nav { justify-content: flex-start; }
   .series { grid-template-columns: 1fr 1fr; gap: 40px 14px; }
   .series .copy { grid-column: 1 / -1; padding: 0; }
   .series .f1, .series .f2 { grid-column: auto; margin: 0; }
@@ -261,21 +244,12 @@ footer a:hover { color: var(--fg); }
   .series .f1 .in, .series .f2 .in { height: 240px; }
   .series .f3 .in { height: 300px; }
   .faq { grid-template-columns: 1fr; gap: 30px; }
-  .faq .stack, .faq .list { grid-column: auto; }
-  .preview { display: none; }
+  .faq > h2, .faq .list { grid-column: auto; }
 }
 @media (max-width: 640px) {
   .wrap { padding: 0 18px; }
   .stack .s { font-size: calc(var(--s, 96px) * .78); }
   .stack .t { font-size: calc(var(--t, 84px) * .78); }
-  .composer textarea { font-size: 16px; padding-left: 18px; min-height: 64px; }
-  .formats-pick { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
-  .formats-pick::-webkit-scrollbar { display: none; }
-  .formats-pick button { flex-shrink: 0; }
-  .facts b { font-size: 40px; }
-  .frow { grid-template-columns: 34px minmax(0, 1fr) 112px; gap: 14px; padding: 20px 0; }
-  .frow .thumb { width: 112px; height: 63px; }
-  .frow .nm { font-size: clamp(22px, 6.6vw, 30px); overflow-wrap: anywhere; }
   .stages { grid-template-columns: 1fr 1fr; }
   .plans { grid-template-columns: 1fr; }
   .plan + .plan { border-left: 0; border-top: 1px solid var(--line); }
@@ -326,97 +300,52 @@ footer a:hover { color: var(--fg); }
   </div>
 </header>
 
-<section class="ask" id="ask">
-  <div class="wrap">
-    <p class="kicker rv">Your turn</p>
-    <h2 class="stack rv"><span class="s">Start with</span><span class="t">one sentence</span></h2>
-    <form class="composer rv" id="composer" action="https://app.animave.com/login" autocomplete="off">
-      <label for="idea" class="sr-only">Your video idea</label>
-      <textarea id="idea" rows="1" placeholder="Explain how compound interest works in 60 seconds"></textarea>
-      <button class="send" type="submit" disabled aria-label="Create video">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-      </button>
-    </form>
-    <div class="formats-pick rv" role="group" aria-label="Format">
-      <button type="button" data-mode="story"><span>Storytelling</span></button>
-      <button type="button" data-mode="motion"><span>Motion Graphics</span></button>
-      <button type="button" data-mode="whiteboard"><span>Whiteboard</span></button>
-      <button type="button" data-mode="animated"><span>Animated Story</span></button>
-      <button type="button" data-mode="3d_render"><span>3D Render</span></button>
-    </div>
-    <div class="ideas rv">
-      <button type="button" data-mode="whiteboard">Why is the sky blue?</button>
-      <button type="button" data-mode="story">A radio call from a ship lost 50 years ago</button>
-      <button type="button" data-mode="motion">What is inflation, in 30 seconds</button>
-    </div>
-    <p class="note rv">500 free credits when you sign up. No credit card.</p>
-    <div class="facts rv">
-      <div><b>7</b><span>video formats</span></div>
-      <div><b>29</b><span>voice languages</span></div>
-      <div><b>9:16</b><span>and 16:9, for Shorts, Reels and YouTube</span></div>
-      <div><b>∞</b><span>credits never expire</span></div>
-    </div>
-  </div>
-</section>
-
 <section class="sec" id="formats">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="stack rv" style="--s: clamp(64px, 8vw, 128px); --t: clamp(48px, 6.4vw, 104px)"><span class="s">Seven</span><span class="t">formats</span></h2>
-      <p class="lead rv">Each one is its own studio, tuned for one kind of video, from the script and the voice to the last cut.</p>
-    </div>
-    <div class="flist">
-      <a class="frow rv app-link" href="https://app.animave.com/login" data-clip="assets/motion.mp4" data-poster="assets/motion.jpg">
-        <span class="no">01</span>
-        <span class="nm">Motion Graphics</span>
-        <span class="tg"><em>kinetic type, charts and diagrams</em><small>10–60 s · code-animated</small></span>
-        <span class="thumb"><video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="none"></video></span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login" data-clip="assets/pixar-demo.mp4" data-poster="assets/pixar-demo.jpg">
-        <span class="no">02</span>
-        <span class="nm">Animated Story</span>
-        <span class="tg"><em>one lead character, a whole story</em><small>1–10 min · captions</small></span>
-        <span class="thumb"><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="none"></video></span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login" data-clip="assets/whiteboard.mp4" data-poster="assets/whiteboard.jpg">
-        <span class="no">03</span>
-        <span class="nm">Whiteboard</span>
-        <span class="tg"><em>drawn line by line, explained aloud</em><small>1–10 min · narrated</small></span>
-        <span class="thumb"><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login" data-clip="assets/2d-animation.mp4" data-poster="assets/2d-animation.jpg">
-        <span class="no">04</span>
-        <span class="nm">2D Animation</span>
-        <span class="tg"><em>your cast, your scenes, your lines</em><small>scene by scene · dialogue</small></span>
-        <span class="thumb"><video src="assets/2d-animation.mp4" poster="assets/2d-animation.jpg" autoplay muted loop playsinline preload="none"></video></span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login" data-clip="assets/storytelling.mp4" data-poster="assets/storytelling.jpg">
-        <span class="no">05</span>
-        <span class="nm">Storytelling</span>
-        <span class="tg"><em>narrated, cinematic, made for YouTube</em><small>1–10 min · narrated</small></span>
-        <span class="thumb"><video src="assets/storytelling.mp4" poster="assets/storytelling.jpg" autoplay muted loop playsinline preload="none"></video></span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login">
-        <span class="no">06</span>
-        <span class="nm">Fruit Drama</span>
-        <span class="tg"><em>viral character shorts with dialogue</em><small>3–10 scenes · Veo 3.1</small></span>
-        <span class="thumb soon">New</span>
-      </a>
-      <a class="frow rv app-link" href="https://app.animave.com/login">
-        <span class="no">07</span>
-        <span class="nm">3D Render</span>
-        <span class="tg"><em>x-ray cutaways and slow camera moves</em><small>10–60 s · narrated</small></span>
-        <span class="thumb soon">New</span>
-      </a>
+      <h2 class="rv">Seven formats.<br><span class="muted">One studio.</span></h2>
+      <div class="side rv">
+        <p class="lead">Each one is its own pipeline, tuned for one kind of video, from the script and the voice to the last cut.</p>
+        <div class="nav"><button type="button" id="fPrev" aria-label="Previous formats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" id="fNext" aria-label="More formats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+      </div>
     </div>
   </div>
-  <div class="preview" id="preview" aria-hidden="true"><video muted loop playsinline preload="none"></video></div>
+  <div class="showcase" id="showcase">
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">01</span><h3>Motion Graphics</h3><p>Kinetic type, charts and diagrams, animated in code and timed to the voice.</p><small>10–60 s · code-animated</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">02</span><h3>Animated Story</h3><p>Design one lead character and get a narrated, captioned short with them in every scene.</p><small>1–10 min · captions</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">03</span><h3>Whiteboard</h3><p>Any topic, drawn line by line and coloured in while a narrator explains it.</p><small>1–10 min · narrated</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/2d-animation.mp4" poster="assets/2d-animation.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">04</span><h3>2D Animation</h3><p>Your own characters, scenes and dialogue, built shot by shot.</p><small>Scene by scene · dialogue</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/storytelling.mp4" poster="assets/storytelling.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">05</span><h3>Storytelling</h3><p>Narrated stories for YouTube, with cinematic scenes, camera moves and sound design.</p><small>1–10 min · narrated</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><div class="art">New in the studio</div></div></div>
+        <div class="meta"><span class="no">06</span><h3>Fruit Drama</h3><p>Viral fruit-character dramas with dialogue, made for Shorts and Reels.</p><small>3–10 scenes · Veo 3.1</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><div class="art">New in the studio</div></div></div>
+        <div class="meta"><span class="no">07</span><h3>3D Render</h3><p>Cinematic 3D explainers: x-ray cutaways, close-ups and slow camera moves.</p><small>10–60 s · narrated</small></div>
+      </a>
+  </div>
 </section>
 
 <section class="sec" id="how">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="stack rv" style="--s: clamp(64px, 8vw, 128px); --t: clamp(48px, 6.4vw, 104px)"><span class="s">The whole</span><span class="t">production</span></h2>
+      <h2 class="rv">The whole production.<br><span class="muted">From one sentence.</span></h2>
       <p class="lead rv">You write one sentence. Behind it, Animave runs every step a studio would, and you approve the plan before anything renders.</p>
     </div>
     <div class="stages">
@@ -427,14 +356,14 @@ footer a:hover { color: var(--fg); }
 <div class="stage rv"><span class="sn">05</span><h3>Edit &amp; sound</h3><p>Cut to the voice, with captions, transitions and sound effects that land on the action.</p></div>
 <div class="stage rv"><span class="sn">06</span><h3>Delivery</h3><p>A finished video, vertical or horizontal, ready for YouTube, Shorts, Reels or TikTok.</p></div>
     </div>
-    <div class="you rv"><em>Your part</em><span><i>01</i>Write the idea</span><span><i>02</i>Review the plan</span><span><i>03</i>Download the video</span></div>
+    <div class="you rv"><em>Your part:</em><span><i>01</i>Write the idea</span><span><i>02</i>Review the plan</span><span><i>03</i>Download the video</span></div>
   </div>
 </section>
 
 <section class="sec" id="series">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="stack rv" style="--s: clamp(64px, 8vw, 128px); --t: clamp(48px, 6.4vw, 104px)"><span class="s">Star in</span><span class="t">your own series</span></h2>
+      <h2 class="rv">Star in your own series.<br><span class="muted">Your friends are the cast.</span></h2>
       <p class="lead rv">Turn yourself and your friends into cartoon characters, give each of them a voice and write the episode. Animave animates every scene.</p>
     </div>
     <div class="series">
@@ -448,9 +377,9 @@ footer a:hover { color: var(--fg); }
         <a class="arrow-link app-link" href="https://app.animave.com/login">Start your series<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
         <p class="fine">Only use photos of people who agreed to be in your series.</p>
       </div>
-      <div class="frame f1 rv"><div class="in"><img src="assets/photo-input.jpg" alt="A photo of two friends" loading="lazy"></div><span class="cap">your photo</span></div>
-      <div class="frame f2 rv"><div class="in"><img src="assets/photo-cartoon.jpg" alt="The same friends as cartoon characters" loading="lazy"></div><span class="cap">your characters</span></div>
-      <div class="frame f3 rv"><div class="in"><video src="assets/photo-animated.mp4" poster="assets/photo-animated.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">your episode</span></div>
+      <div class="frame f1 rv"><div class="in"><img src="assets/photo-input.jpg" alt="A photo of two friends" loading="lazy"></div><span class="cap">Your photo</span></div>
+      <div class="frame f2 rv"><div class="in"><img src="assets/photo-cartoon.jpg" alt="The same friends as cartoon characters" loading="lazy"></div><span class="cap">Your characters</span></div>
+      <div class="frame f3 rv"><div class="in"><video src="assets/photo-animated.mp4" poster="assets/photo-animated.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">Your episode</span></div>
     </div>
   </div>
 </section>
@@ -458,7 +387,7 @@ footer a:hover { color: var(--fg); }
 <section class="sec" id="pricing" style="padding-top: 210px">
   <div class="wrap">
     <div class="sec-head">
-      <h2 class="stack rv" style="--s: clamp(64px, 8vw, 128px); --t: clamp(48px, 6.4vw, 104px)"><span class="s">Start free</span><span class="t">pay as you make</span></h2>
+      <h2 class="rv">Start free.<br><span class="muted">Pay only for what you make.</span></h2>
       <p class="lead rv">Every plan unlocks every format, 1080p and all voices. Plans differ only in how many credits you get.</p>
     </div>
     <div class="plans">
@@ -501,7 +430,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="sec" id="faq">
   <div class="wrap faq">
-    <h2 class="stack rv" style="--s: clamp(56px, 6vw, 96px); --t: clamp(40px, 4.6vw, 76px)"><span class="s">Questions</span><span class="t">answered</span></h2>
+    <h2 class="rv">Questions,<br><span class="muted">answered.</span></h2>
     <div class="list rv">
 <details open><summary>How long does a video take?<i></i></summary><p>Most short videos are ready in a few minutes. Longer stories take longer, because every scene is written, voiced, animated and edited; you can follow each scene as it finishes.</p></details>
 <details><summary>How do credits work?<i></i></summary><p>Each format has its own price in credits, and you see it before you start: a 15-second Motion Graphics video is 465 credits, a one-minute Whiteboard video 180. Credits never expire.</p></details>
@@ -517,7 +446,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="closing">
   <div class="wrap">
-    <h2 class="stack rv"><span class="s">Your next video</span><span class="t">one sentence away</span></h2>
+    <h2 class="rv">Your next video<br><span class="muted">starts with one sentence.</span></h2>
     <div class="acts rv">
       <a class="pill app-link" href="https://app.animave.com/login">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <a class="arrow-link" href="#pricing">See pricing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -555,13 +484,13 @@ footer a:hover { color: var(--fg); }
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // dot field behind the whole page: a quiet grid that scrolls with the content; within ~190px of
-  // the cursor dots grow and blend from blue to violet. Dots behind the see-through composer stay still,
-  // and under running text the glow is kept faint so the words stay easy to read.
+  // the cursor dots grow and blend from blue to violet; under running text the glow is kept faint
+  // so the words stay easy to read.
   (function () {
-    var cv = document.getElementById('dots'), ctx = cv.getContext('2d'), box = document.getElementById('composer');
+    var cv = document.getElementById('dots'), ctx = cv.getContext('2d');
     var GAP = 22, R = 190, dpr = 1, w = 0, h = 0;
     var target = { x: -9999, y: -9999 }, pos = { x: -9999, y: -9999 }, glow = 0, glowTo = 0, raf = 0, dirty = false;
-    var TEXT = 'h1 .s, h2 .s, h3, p, li, summary, .kicker, .facts div, .you, .formats-pick, .ideas, .frow .nm, .frow .tg, .pp, .pn', textRects = [];
+    var TEXT = 'h1 .s, h2 .s, h3, p, li, summary, .kicker, .you, .fcard .meta, .pp, .pn', textRects = [];
     function measureText() {
       var sy = window.scrollY; textRects = [];
       document.querySelectorAll(TEXT).forEach(function (el) {
@@ -578,8 +507,7 @@ footer a:hover { color: var(--fg); }
     }
     function draw() {
       ctx.clearRect(0, 0, w, h);
-      var br = box.getBoundingClientRect(), sy = window.scrollY;
-      var bx0 = br.left - 4, bx1 = br.right + 4, by0 = br.top - 4, by1 = br.bottom + 4;
+      var sy = window.scrollY;
       var ox = (w % GAP) / 2 + GAP / 2, oy = GAP / 2 - (sy % GAP), near = [];
       if (glow > 0.01) for (var j = 0; j < textRects.length; j++) {
         var q = textRects[j], top = q[1] - sy, bot = q[3] - sy;
@@ -588,7 +516,7 @@ footer a:hover { color: var(--fg); }
       for (var y = oy; y < h + GAP; y += GAP) {
         for (var x = ox; x < w; x += GAP) {
           var dx = x - pos.x, dy = y - pos.y, d2 = dx * dx + dy * dy, k = 0;
-          if (glow > 0.01 && d2 < R * R && !(x > bx0 && x < bx1 && y > by0 && y < by1)) {
+          if (glow > 0.01 && d2 < R * R) {
             k = 1 - Math.sqrt(d2) / R; k = k * k * (3 - 2 * k) * glow;
             for (var m = 0; m < near.length; m++) { var n = near[m]; if (x > n[0] && x < n[2] && y > n[1] && y < n[3]) { k *= 0.22; break; } }
           }
@@ -636,63 +564,25 @@ footer a:hover { color: var(--fg); }
     }, 4500);
   })();
 
-  // formats: a large framed preview follows the cursor over a row that has a clip
+  // dock: bottom of the first screen, top everywhere else
   (function () {
-    var pv = document.getElementById('preview'), vid = pv.querySelector('video'), cur = null;
-    if (!hover) return;
-    var x = 0, y = 0, tx = 0, ty = 0, raf = 0;
-    function loop() { x += (tx - x) * 0.16; y += (ty - y) * 0.16; pv.style.transform = 'translate3d(' + (x + 28) + 'px,' + (y - 120) + 'px,0)'; raf = pv.classList.contains('on') ? requestAnimationFrame(loop) : 0; }
-    document.querySelectorAll('.frow[data-clip]').forEach(function (row) {
-      row.addEventListener('mouseenter', function (e) {
-        if (cur !== row.dataset.clip) { cur = row.dataset.clip; vid.poster = row.dataset.poster; vid.src = cur; }
-        var p = vid.play(); if (p && p.catch) p.catch(function () {});
-        if (!pv.classList.contains('on')) { x = tx = e.clientX; y = ty = e.clientY; }
-        pv.classList.add('on'); if (!raf) raf = requestAnimationFrame(loop);
-      });
-      row.addEventListener('mousemove', function (e) { tx = e.clientX; ty = e.clientY; });
-      row.addEventListener('mouseleave', function () { pv.classList.remove('on'); vid.pause(); });
-    });
+    var dock = document.getElementById('nav'), hero = document.querySelector('.vision');
+    function place() { dock.classList.toggle('top', window.scrollY > hero.offsetHeight - 140); }
+    window.addEventListener('scroll', place, { passive: true }); window.addEventListener('resize', place); place();
   })();
 
-  // composer: rotating example ideas as the placeholder, a format to start in, then on to the app
-  var form = document.getElementById('composer'), idea = document.getElementById('idea'), send = form.querySelector('.send');
-  var examples = ['Explain how compound interest works in 60 seconds', 'A fox races through a snowy forest to deliver the last letter of winter',
-    'The history of coffee as a whiteboard explainer', 'What happens to your body after three days without sleep?', 'Peach finds out Banana ate her birthday cake'];
-  var mode = null, ex = 0, ch = examples[0].length, deleting = true;
-  function tick() {
-    if (!idea.value && document.activeElement !== idea && !still) {
-      if (deleting) { ch--; if (ch <= 0) { deleting = false; ex = (ex + 1) % examples.length; } }
-      else { ch++; if (ch >= examples[ex].length) { deleting = true; setTimeout(tick, 2200); idea.placeholder = examples[ex]; return; } }
-      idea.placeholder = examples[ex].slice(0, Math.max(0, ch)) || ' ';
-    }
-    setTimeout(tick, deleting ? 22 : 38);
-  }
-  setTimeout(tick, 2600);
-  function setMode(m) {
-    mode = m;
-    document.querySelectorAll('.formats-pick button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === m)); });
-  }
-  document.querySelectorAll('.formats-pick button').forEach(function (b) {
-    b.setAttribute('aria-pressed', 'false');
-    b.addEventListener('click', function () { setMode(mode === b.dataset.mode ? null : b.dataset.mode); });
-  });
-  function sync() {
-    send.disabled = !idea.value.trim();
-    idea.style.height = 'auto'; idea.style.height = Math.min(idea.scrollHeight, 168) + 'px';
-  }
-  idea.addEventListener('input', sync);
-  idea.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!send.disabled) form.requestSubmit(); } });
-  document.querySelectorAll('.ideas button').forEach(function (b) {
-    b.addEventListener('click', function () { idea.value = b.textContent; setMode(b.dataset.mode); sync(); idea.focus(); });
-  });
+  // formats showcase: arrows scroll by one card
+  (function () {
+    var sc = document.getElementById('showcase'), prev = document.getElementById('fPrev'), next = document.getElementById('fNext');
+    function step() { var c = sc.querySelector('.fcard'); return c ? c.getBoundingClientRect().width + 22 : 400; }
+    function sync() { prev.disabled = sc.scrollLeft < 4; next.disabled = sc.scrollLeft + sc.clientWidth > sc.scrollWidth - 4; }
+    prev.addEventListener('click', function () { sc.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', function () { sc.scrollBy({ left: step(), behavior: 'smooth' }); });
+    sc.addEventListener('scroll', sync, { passive: true }); window.addEventListener('resize', sync); sync();
+  })();
 
   // the app is desktop-only: on phones, explain instead of sending people to a blocked page
   var phone = window.matchMedia('(max-width: 760px) and (pointer: coarse)');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (phone.matches) { document.getElementById('desktopOnly').classList.add('open'); return; }
-    window.location.href = 'https://app.animave.com/login';
-  });
   document.querySelectorAll('.app-link').forEach(function (a) {
     a.addEventListener('click', function (ev) {
       if (phone.matches) { ev.preventDefault(); document.getElementById('desktopOnly').classList.add('open'); }
