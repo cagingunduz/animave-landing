@@ -102,6 +102,40 @@ h2 .muted { color: var(--fg-4); }
 .vision .blurb { position: absolute; z-index: 2; left: calc(50% + clamp(180px, 15vw, 215px)); top: calc(4vh + clamp(250px, 32vw, 400px) + 70px); max-width: 240px; }
 .vision .blurb p { font-size: 16px; line-height: 1.45; color: rgba(255,255,255,.88); margin-bottom: 18px; }
 
+/* 2 — who it's for: the dock's blue glow becomes a solid blue screen */
+.audience { position: relative; background: linear-gradient(180deg, rgba(31,60,245,0) 0, #1f3cf5 180px, #1b37ea 100%); padding: 220px 0 120px; overflow: hidden; }
+.audience .lines { position: absolute; inset: 0; max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }
+.audience .lines i { border-left: 1px solid rgba(255,255,255,.13); }
+.audience .lines i:last-child { border-right: 1px solid rgba(255,255,255,.13); }
+.audience .wrap { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); grid-template-rows: auto 1fr auto; min-height: 640px; }
+.audience .copy { grid-column: 1 / span 3; grid-row: 1; padding-right: 28px; }
+.mix { font-weight: 400; line-height: .98; letter-spacing: -.02em; font-size: clamp(52px, 6.4vw, 96px); }
+.mix em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.02em; }
+.mix span { font-family: var(--thin); font-weight: 200; letter-spacing: -.015em; }
+.audience .copy p { font-size: 16.5px; line-height: 1.55; color: rgba(255,255,255,.88); max-width: 430px; margin: 28px 0 30px; }
+.audience .arrow-link { border-color: rgba(255,255,255,.7); }
+.audience .idx { grid-column: 6; grid-row: 1; justify-self: end; font-size: 15px; color: rgba(255,255,255,.85); font-variant-numeric: tabular-nums; }
+.audience .card { grid-column: 4 / span 3; grid-row: 2 / span 2; align-self: end; margin-top: 60px; }
+.audience .card .media { position: relative; height: 0; padding-top: 62%; overflow: hidden; background: #0f1a7a; }
+.audience .card .media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .9s ease; }
+.audience .card .media video.on { opacity: 1; }
+.audience .card .cap { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-top: 18px; }
+.audience .card .cap em { font-family: var(--serif); font-style: italic; font-size: 30px; }
+.audience .card .cap span { font-size: 14px; color: rgba(255,255,255,.8); max-width: 320px; text-align: right; }
+.audience .card .cap .cnt { margin-left: auto; font-size: 13px; color: rgba(255,255,255,.65); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.audience .card .cap { flex-wrap: wrap; }
+.audience .card .cap #whoText { flex-basis: 100%; text-align: left; max-width: 460px; margin-top: 4px; }
+.audience .who { grid-column: 1 / span 3; grid-row: 3; align-self: end; }
+.audience .who p { font-size: 13px; color: rgba(255,255,255,.75); margin-bottom: 12px; }
+.audience .who ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.audience .who button { font: inherit; font-size: 13.5px; color: rgba(255,255,255,.82); background: transparent; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; height: 34px; padding: 0 14px; cursor: pointer; transition: all .2s; }
+.audience .who button:hover { border-color: #fff; color: #fff; }
+.audience .who button[aria-selected="true"] { background: #fff; color: #1b37ea; border-color: #fff; }
+
+/* section index, top right of every section head, like /01 on the blue screen */
+.sec-head { position: relative; }
+.sec-head .sidx { position: absolute; right: 0; top: -54px; font-size: 14px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+
 /* formats: a horizontal showcase of framed clips */
 .sec-head .nav { display: flex; gap: 8px; justify-content: flex-end; }
 .sec-head .nav button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,.02); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .2s, background .2s, opacity .2s; }
@@ -223,6 +257,12 @@ footer a:hover { color: var(--fg); }
   .plan:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 }
 @media (max-width: 960px) {
+  .audience { padding: 170px 0 90px; }
+  .audience .wrap { grid-template-columns: 1fr; grid-template-rows: none; min-height: 0; gap: 34px; }
+  .audience .copy, .audience .idx, .audience .card, .audience .who { grid-column: auto; grid-row: auto; padding: 0; margin: 0; }
+  .audience .idx { justify-self: start; order: -1; }
+  .audience .card .cap { flex-direction: column; gap: 6px; }
+  .audience .card .cap span { text-align: left; }
   .vision { height: auto; min-height: 0; padding: 48px 0 56px; display: flex; flex-direction: column; align-items: center; }
   .vision .title, .vision .marquee, .phone, .vision .stat, .vision .blurb { position: relative; inset: auto; left: auto; right: auto; top: auto; bottom: auto; transform: none; }
   .vision .title { order: 1; }
@@ -300,9 +340,29 @@ footer a:hover { color: var(--fg); }
   </div>
 </header>
 
+<section class="audience" id="who" aria-labelledby="whoTitle">
+  <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <div class="copy rv">
+      <h2 class="mix" id="whoTitle"><em>Made</em> <span>for the</span><br><span>Story-Minded</span></h2>
+      <p>Whether you run a YouTube channel, teach a class or grow a brand, Animave turns what you want to say into a finished video, in your style and at your pace.</p>
+      <a class="arrow-link" href="#formats">Learn more<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+    <span class="idx" aria-hidden="true">/01</span>
+    <div class="card rv">
+      <div class="media"><video class="on" src="assets/storytelling.mp4" poster="assets/storytelling.jpg" muted loop playsinline preload="auto" autoplay></video><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" muted loop playsinline preload="none"></video><video src="assets/motion.mp4" poster="assets/motion.jpg" muted loop playsinline preload="none"></video><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" muted loop playsinline preload="none"></video></div>
+      <div class="cap"><em id="whoTitleCard">For Creators</em><span class="cnt" id="whoIdx">01 / 04</span><span id="whoText">Shorts, Reels and long-form YouTube, without an edit suite.</span></div>
+    </div>
+    <div class="who rv">
+      <p>Who it's for?</p>
+      <ul role="tablist" aria-label="Who it's for"><li><button type="button" role="tab" aria-selected="true" data-i="0">Creators</button></li><li><button type="button" role="tab" aria-selected="false" data-i="1">Educators</button></li><li><button type="button" role="tab" aria-selected="false" data-i="2">Brands</button></li><li><button type="button" role="tab" aria-selected="false" data-i="3">Storytellers</button></li></ul>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="formats">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head"><span class="sidx" aria-hidden="true">/02</span>
       <h2 class="rv">Seven formats.<br><span class="muted">One studio.</span></h2>
       <div class="side rv">
         <p class="lead">Each one is its own pipeline, tuned for one kind of video, from the script and the voice to the last cut.</p>
@@ -344,7 +404,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="sec" id="how">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head"><span class="sidx" aria-hidden="true">/03</span>
       <h2 class="rv">The whole production.<br><span class="muted">From one sentence.</span></h2>
       <p class="lead rv">You write one sentence. Behind it, Animave runs every step a studio would, and you approve the plan before anything renders.</p>
     </div>
@@ -362,7 +422,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="sec" id="series">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head"><span class="sidx" aria-hidden="true">/04</span>
       <h2 class="rv">Star in your own series.<br><span class="muted">Your friends are the cast.</span></h2>
       <p class="lead rv">Turn yourself and your friends into cartoon characters, give each of them a voice and write the episode. Animave animates every scene.</p>
     </div>
@@ -386,7 +446,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="sec" id="pricing" style="padding-top: 210px">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head"><span class="sidx" aria-hidden="true">/05</span>
       <h2 class="rv">Start free.<br><span class="muted">Pay only for what you make.</span></h2>
       <p class="lead rv">Every plan unlocks every format, 1080p and all voices. Plans differ only in how many credits you get.</p>
     </div>
@@ -566,9 +626,26 @@ footer a:hover { color: var(--fg); }
 
   // dock: bottom of the first screen, top everywhere else
   (function () {
-    var dock = document.getElementById('nav'), hero = document.querySelector('.vision');
-    function place() { dock.classList.toggle('top', window.scrollY > hero.offsetHeight - 140); }
+    var dock = document.getElementById('nav');
+    function place() { dock.classList.toggle('top', window.scrollY > 60); }  // at the very top it rests at the bottom; any scroll sends it up
     window.addEventListener('scroll', place, { passive: true }); window.addEventListener('resize', place); place();
+  })();
+
+  // who it's for: rotate the audiences every few seconds; the tabs pick one
+  (function () {
+    var list = [{t:"For Creators",d:"Shorts, Reels and long-form YouTube, without an edit suite."},{t:"For Educators",d:"Lessons drawn and explained line by line, in 29 languages."},{t:"For Brands",d:"Explainers, launches and numbers that move, in your colours."},{t:"For Storytellers",d:"Characters that stay the same from the first scene to the last."}];
+    var vids = document.querySelectorAll('.audience .media video'), tabs = document.querySelectorAll('.audience .who button');
+    var idx = document.getElementById('whoIdx'), title = document.getElementById('whoTitleCard'), text = document.getElementById('whoText'), cur = 0, timer;
+    function show(i) {
+      vids[cur].classList.remove('on'); vids[cur].pause();
+      cur = i; var v = vids[i]; v.currentTime = 0; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {});
+      v.classList.add('on');
+      tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); });
+      idx.textContent = '0' + (i + 1) + ' / 0' + list.length; title.textContent = list[i].t; text.textContent = list[i].d;
+    }
+    function auto() { clearInterval(timer); timer = setInterval(function () { show((cur + 1) % list.length); }, 5000); }
+    tabs.forEach(function (t) { t.addEventListener('click', function () { show(+t.dataset.i); auto(); }); });
+    auto();
   })();
 
   // formats showcase: arrows scroll by one card
