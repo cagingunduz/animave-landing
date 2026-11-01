@@ -58,15 +58,13 @@ h2 .muted { color: var(--fg-4); }
 .sec-head > .lead, .sec-head > .side { grid-column: 5 / span 2; padding-bottom: 8px; }
 .sec-head .side .lead { margin-bottom: 22px; }
 
-/* dock: the menu lives at the bottom, over a blue glow */
-/* the dock sits at the bottom of the first screen and slides to the top once you scroll past it */
-.dock { position: fixed; left: 0; right: 0; top: 0; z-index: 60; height: 64px; transform: translateY(calc(100vh - 64px)); transform: translateY(calc(100dvh - 64px)); transition: transform .6s cubic-bezier(.16,1,.3,1); display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; isolation: isolate; }
+/* dock: part of the page right under the first screen; it scrolls up with it and then sticks to the top */
+.dock { position: -webkit-sticky; position: sticky; top: 0; z-index: 60; height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 0 28px; isolation: isolate; }
 .dock::before { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 130px; z-index: -1; pointer-events: none; transition: opacity .4s;
   background: radial-gradient(70% 100% at 50% 100%, rgba(38,70,255,.95) 0%, rgba(38,70,255,.45) 38%, rgba(38,70,255,0) 78%); }
 .dock::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .4s;
   background: linear-gradient(180deg, rgba(20,26,70,.92), rgba(15,15,16,.86)); backdrop-filter: saturate(150%) blur(14px); -webkit-backdrop-filter: saturate(150%) blur(14px);
   border-bottom: 1px solid rgba(110,120,255,.28); box-shadow: 0 10px 40px -10px rgba(38,70,255,.45); }
-.dock.top { transform: translateY(0); }
 .dock.top::before { opacity: 0; }
 .dock.top::after { opacity: 1; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; letter-spacing: -.01em; }
@@ -80,7 +78,7 @@ h2 .muted { color: var(--fg-4); }
 .dock .login:hover { color: #fff; }
 
 /* 1 — first screen */
-.vision { position: relative; height: max(100vh, 760px); min-height: 760px; overflow: hidden; }
+.vision { position: relative; height: calc(max(100vh, 760px) - 64px); min-height: 696px; overflow: hidden; }
 .vision .title { position: absolute; left: 0; right: 0; top: 4vh; text-align: center; pointer-events: none; --s: clamp(88px, 13.5vw, 210px); --t: clamp(64px, 10.5vw, 165px); }
 .vision .title .t { margin-top: -.2em; }
 .vision .marquee { position: absolute; left: 0; right: 0; top: calc(4vh + clamp(250px, 32vw, 400px)); z-index: 1; overflow: hidden;
@@ -103,7 +101,7 @@ h2 .muted { color: var(--fg-4); }
 .vision .blurb p { font-size: 16px; line-height: 1.45; color: rgba(255,255,255,.88); margin-bottom: 18px; }
 
 /* 2 — who it's for: the dock's blue glow becomes a solid blue screen */
-.audience { position: relative; background: linear-gradient(180deg, rgba(31,60,245,0) 0, #1f3cf5 180px, #1b37ea 100%); padding: 220px 0 120px; overflow: hidden; }
+.audience { position: relative; background: linear-gradient(180deg, rgba(31,60,245,.55) 0, #1f3cf5 140px, #1b37ea 100%); padding: 170px 0 120px; overflow: hidden; }
 .audience .lines { position: absolute; inset: 0; max-width: var(--max); margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); pointer-events: none; }
 .audience .lines i { border-left: 1px solid rgba(255,255,255,.13); }
 .audience .lines i:last-child { border-right: 1px solid rgba(255,255,255,.13); }
@@ -304,19 +302,6 @@ footer a:hover { color: var(--fg); }
 <canvas id="dots" aria-hidden="true"></canvas>
 <div class="cols" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
-<nav class="dock" id="nav" aria-label="Main">
-  <a href="#" class="logo" aria-label="Animave home"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><polygon points="12,2 22,20 2,20"/><line x1="12" y1="8" x2="12" y2="15"/><circle cx="12" cy="17" r="0.5" fill="white"/></svg>Animave</a>
-  <ul class="links">
-    <li><a href="#formats">Formats</a></li>
-    <li><a href="#how">How it works</a></li>
-    <li><a href="#series">Series</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-  </ul>
-  <div class="right">
-    <a class="login app-link" href="https://app.animave.com/login">Log in</a>
-    <a class="arrow-link app-link" href="https://app.animave.com/login">Start free<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-  </div>
-</nav>
 
 <header class="vision" aria-labelledby="visionTitle">
   <h1 class="title stack" id="visionTitle"><span class="s">Ideas</span><span class="t">in motion</span></h1>
@@ -339,6 +324,20 @@ footer a:hover { color: var(--fg); }
     <a class="arrow-link app-link" href="https://app.animave.com/login">Make my first video<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
   </div>
 </header>
+
+<nav class="dock" id="nav" aria-label="Main">
+  <a href="#" class="logo" aria-label="Animave home"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><polygon points="12,2 22,20 2,20"/><line x1="12" y1="8" x2="12" y2="15"/><circle cx="12" cy="17" r="0.5" fill="white"/></svg>Animave</a>
+  <ul class="links">
+    <li><a href="#formats">Formats</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#series">Series</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="right">
+    <a class="login app-link" href="https://app.animave.com/login">Log in</a>
+    <a class="arrow-link app-link" href="https://app.animave.com/login">Start free<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </div>
+</nav>
 
 <section class="audience" id="who" aria-labelledby="whoTitle">
   <div class="lines" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -624,10 +623,10 @@ footer a:hover { color: var(--fg); }
     }, 4500);
   })();
 
-  // dock: bottom of the first screen, top everywhere else
+  // dock: glowing under the first screen, a solid bar once it sticks to the top
   (function () {
-    var dock = document.getElementById('nav');
-    function place() { dock.classList.toggle('top', window.scrollY > 60); }  // at the very top it rests at the bottom; any scroll sends it up
+    var dock = document.getElementById('nav'), hero = document.querySelector('.vision');
+    function place() { dock.classList.toggle('top', window.scrollY >= hero.offsetHeight - 1); }
     window.addEventListener('scroll', place, { passive: true }); window.addEventListener('resize', place); place();
   })();
 
