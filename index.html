@@ -140,8 +140,8 @@ h2 .muted { color: var(--fg-4); }
 .showcase { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;
   padding: 6px max(28px, calc((100vw - var(--max)) / 2 + 28px)) 40px; scroll-padding: 0 max(28px, calc((100vw - var(--max)) / 2 + 28px)); }
 .showcase::-webkit-scrollbar { display: none; }
-.fcard { flex: 0 0 auto; width: min(540px, 82vw); scroll-snap-align: start; }
-.fcard .frame .in { height: 0; padding-top: 56.25%; }
+.fcard { flex: 0 0 auto; width: min(300px, 72vw); scroll-snap-align: start; }
+.fcard .frame .in { height: 0; padding-top: 177.78%; }   /* the reels are vertical 9:16 */
 .fcard .art { position: absolute; inset: 0; background: radial-gradient(60% 80% at 30% 30%, rgba(79,124,255,.35), transparent 70%), radial-gradient(60% 80% at 75% 70%, rgba(163,92,255,.35), transparent 70%), #121320;
   display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; color: rgba(255,255,255,.75); }
 .fcard .meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin-top: 20px; }
@@ -176,12 +176,12 @@ h2 .muted { color: var(--fg-4); }
 .frame .in { position: relative; border-radius: 16.5px; overflow: hidden; background: var(--surface-2); }
 .frame .in > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .frame .cap { position: absolute; left: 0; right: 0; top: calc(100% + 12px); font-size: 13px; color: var(--fg-3); }
-.series .f1 { grid-column: 3 / span 1; margin: 40px 14px 0; }
+.series .f1 { grid-column: 3 / span 1; margin: 0 14px 0; }
 .series .f1 .in { height: 330px; }
-.series .f2 { grid-column: 4 / span 1; margin: 120px 14px 0; }
+.series .f2 { grid-column: 4 / span 1; margin: 80px 14px 0; }
 .series .f2 .in { height: 330px; }
-.series .f3 { grid-column: 5 / span 2; margin: 0 0 0 14px; }
-.series .f3 .in { height: 520px; }
+.series .f3 { grid-column: 5 / span 1; margin: 0 14px 0; }
+.series .f3 .in { height: 330px; }
 
 /* 6 — pricing on the columns */
 .plans { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -275,9 +275,9 @@ footer a:hover { color: var(--fg); }
   .series { grid-template-columns: 1fr 1fr; gap: 40px 14px; }
   .series .copy { grid-column: 1 / -1; padding: 0; }
   .series .f1, .series .f2 { grid-column: auto; margin: 0; }
-  .series .f3 { grid-column: 1 / -1; margin: 30px 0 0; }
+  .series .f3 { grid-column: auto; margin: 0; }
   .series .f1 .in, .series .f2 .in { height: 240px; }
-  .series .f3 .in { height: 300px; }
+  .series .f3 .in { height: 240px; }
   .faq { grid-template-columns: 1fr; gap: 30px; }
   .faq > h2, .faq .list { grid-column: auto; }
 }
@@ -302,22 +302,24 @@ footer a:hover { color: var(--fg); }
 <header class="vision" aria-labelledby="visionTitle">
   <h1 class="title stack" id="visionTitle"><span class="s">Ideas</span><span class="t">in motion</span></h1>
   <div class="marquee" aria-hidden="true"><div class="track">
-    <span>YouTube Shorts</span><span>TikTok</span><span>Instagram Reels</span><span>YouTube</span><span>Facebook Reels</span><span>LinkedIn</span><span>Snapchat Spotlight</span>
-    <span>YouTube Shorts</span><span>TikTok</span><span>Instagram Reels</span><span>YouTube</span><span>Facebook Reels</span><span>LinkedIn</span><span>Snapchat Spotlight</span>
+    <span>YouTube Shorts</span><span>TikTok</span><span>Instagram Reels</span><span>Facebook Reels</span><span>LinkedIn</span><span>Snapchat Spotlight</span>
+    <span>YouTube Shorts</span><span>TikTok</span><span>Instagram Reels</span><span>Facebook Reels</span><span>LinkedIn</span><span>Snapchat Spotlight</span>
   </div></div>
   <div class="phone" aria-label="Videos made with Animave">
-    <video class="on" src="assets/phone-motion.mp4" poster="assets/phone-motion.jpg" autoplay muted loop playsinline preload="auto"></video>
-    <video src="assets/phone-story.mp4" poster="assets/phone-story.jpg" muted loop playsinline preload="metadata"></video>
-    <video src="assets/phone-2d.mp4" poster="assets/phone-2d.jpg" muted loop playsinline preload="metadata"></video>
+    <video class="on" src="assets/r-premium.mp4" poster="assets/r-premium.jpg" autoplay muted loop playsinline preload="auto"></video>
+    <video src="assets/r-scifi_toon.mp4" poster="assets/r-scifi_toon.jpg" muted loop playsinline preload="metadata"></video>
+    <video src="assets/r-caption_news.mp4" poster="assets/r-caption_news.jpg" muted loop playsinline preload="metadata"></video>
+    <video src="assets/r-survival.mp4" poster="assets/r-survival.jpg" muted loop playsinline preload="metadata"></video>
+    <video src="assets/r-paper_lantern.mp4" poster="assets/r-paper_lantern.jpg" muted loop playsinline preload="metadata"></video>
   </div>
   <div class="stat">
     <b>500<sup>+</sup></b>
     <p>free credits to start,<br>no card needed</p>
-    <div class="thumbs" aria-hidden="true"><img src="assets/phone-story.jpg" alt=""><img src="assets/pixar-demo.jpg" alt=""><img src="assets/2d-animation.jpg" alt=""><img src="assets/motion.jpg" alt=""></div>
+    <div class="thumbs" aria-hidden="true"><img src="assets/r-explainer.jpg" alt=""><img src="assets/r-teardown.jpg" alt=""><img src="assets/r-whiteboard.jpg" alt=""><img src="assets/r-block.jpg" alt=""></div>
   </div>
   <div class="blurb">
-    <p>Finished videos from one sentence. Scripted, voiced, animated and edited for every platform.</p>
-    <a class="arrow-link app-link" href="https://app.animave.com/login">Make my first video<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    <p>Finished vertical reels from one sentence. Written, voiced, animated frame by frame and mixed, ready to post.</p>
+    <a class="arrow-link app-link" href="https://app.animave.com/login">Make my first reel<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
   </div>
 </header>
 
@@ -326,7 +328,7 @@ footer a:hover { color: var(--fg); }
   <ul class="links">
     <li><a href="#formats">Formats</a></li>
     <li><a href="#how">How it works</a></li>
-    <li><a href="#series">Series</a></li>
+    <li><a href="#footage">Your footage</a></li>
     <li><a href="#pricing">Pricing</a></li>
   </ul>
   <div class="right">
@@ -340,13 +342,13 @@ footer a:hover { color: var(--fg); }
   <div class="wrap">
     <div class="copy rv">
       <h2 class="mix" id="whoTitle"><em>Made</em> <span>for the</span><br><span>Story-Minded</span></h2>
-      <p>Whether you run a YouTube channel, teach a class or grow a brand, Animave turns what you want to say into a finished video, in your style and at your pace.</p>
+      <p>Whether you run a channel, teach a class or grow a brand, Animave turns what you want to say into a finished reel, in the format that fits it.</p>
       <a class="arrow-link" href="#formats">Learn more<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
     </div>
     <span class="idx" aria-hidden="true">/01</span>
     <div class="card rv">
-      <div class="media"><video class="on" src="assets/storytelling.mp4" poster="assets/storytelling.jpg" muted loop playsinline preload="auto" autoplay></video><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" muted loop playsinline preload="none"></video><video src="assets/motion.mp4" poster="assets/motion.jpg" muted loop playsinline preload="none"></video><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" muted loop playsinline preload="none"></video></div>
-      <div class="cap"><em id="whoTitleCard">For Creators</em><span class="cnt" id="whoIdx">01 / 04</span><span id="whoText">Shorts, Reels and long-form YouTube, without an edit suite.</span></div>
+      <div class="media"><video class="on" src="assets/r-scifi_toon.mp4" poster="assets/r-scifi_toon.jpg" muted loop playsinline preload="auto" autoplay></video><video src="assets/r-whiteboard.mp4" poster="assets/r-whiteboard.jpg" muted loop playsinline preload="none"></video><video src="assets/r-premium.mp4" poster="assets/r-premium.jpg" muted loop playsinline preload="none"></video><video src="assets/r-paper_lantern.mp4" poster="assets/r-paper_lantern.jpg" muted loop playsinline preload="none"></video></div>
+      <div class="cap"><em id="whoTitleCard">For Creators</em><span class="cnt" id="whoIdx">01 / 04</span><span id="whoText">A new reel every day, without a camera or an edit suite.</span></div>
     </div>
     <div class="who rv">
       <p>Who it's for?</p>
@@ -358,41 +360,69 @@ footer a:hover { color: var(--fg); }
 <section class="sec" id="formats">
   <div class="wrap">
     <div class="sec-head"><span class="sidx" aria-hidden="true">/02</span>
-      <h2 class="rv">Seven formats.<br><span class="muted">One studio.</span></h2>
+      <h2 class="rv">Fourteen formats.<br><span class="muted">One reels studio.</span></h2>
       <div class="side rv">
-        <p class="lead">Each one is its own pipeline, tuned for one kind of video, from the script and the voice to the last cut.</p>
+        <p class="lead">Each one is its own pipeline, tuned for one kind of reel, from the script and the voice to the last frame and the sound.</p>
         <div class="nav"><button type="button" id="fPrev" aria-label="Previous formats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" id="fNext" aria-label="More formats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
       </div>
     </div>
   </div>
   <div class="showcase" id="showcase">
       <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><video src="assets/motion.mp4" poster="assets/motion.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
-        <div class="meta"><span class="no">01</span><h3>Motion Graphics</h3><p>Kinetic type, charts and diagrams, animated in code and timed to the voice.</p><small>10–60 s · code-animated</small></div>
+        <div class="frame"><div class="in"><video src="assets/r-premium.mp4" poster="assets/r-premium.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">01</span><h3>Premium Faceless</h3><p>Your message typed on letter by letter, a live UI diagram for every line, glossy depth and your handle at the end.</p><small>20–40 s · your brand colour</small></div>
       </a>
       <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><video src="assets/pixar-demo.mp4" poster="assets/pixar-demo.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
-        <div class="meta"><span class="no">02</span><h3>Animated Story</h3><p>Design one lead character and get a narrated, captioned short with them in every scene.</p><small>1–10 min · captions</small></div>
+        <div class="frame"><div class="in"><video src="assets/r-explainer.mp4" poster="assets/r-explainer.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">02</span><h3>Explainer</h3><p>A cartoon host explains any topic in 30–60 seconds, with cards, counters and little demos.</p><small>30–60 s · talking host</small></div>
       </a>
       <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><video src="assets/whiteboard.mp4" poster="assets/whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
-        <div class="meta"><span class="no">03</span><h3>Whiteboard</h3><p>Any topic, drawn line by line and coloured in while a narrator explains it.</p><small>1–10 min · narrated</small></div>
+        <div class="frame"><div class="in"><video src="assets/r-scifi_toon.mp4" poster="assets/r-scifi_toon.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">03</span><h3>Sci-Fi Sitcom Toon</h3><p>A deadpan genius and his nervous sidekick portal-hop through your topic. Three voices, lip-synced.</p><small>35–75 s · dialogue</small></div>
       </a>
       <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><video src="assets/2d-animation.mp4" poster="assets/2d-animation.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
-        <div class="meta"><span class="no">04</span><h3>2D Animation</h3><p>Your own characters, scenes and dialogue, built shot by shot.</p><small>Scene by scene · dialogue</small></div>
+        <div class="frame"><div class="in"><video src="assets/r-caption_news.mp4" poster="assets/r-caption_news.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">04</span><h3>Caption News</h3><p>Real footage under huge captions, rolling numbers and a source on every figure. Your clips or open archives.</p><small>30–75 s · real footage</small></div>
       </a>
       <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><video src="assets/storytelling.mp4" poster="assets/storytelling.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
-        <div class="meta"><span class="no">05</span><h3>Storytelling</h3><p>Narrated stories for YouTube, with cinematic scenes, camera moves and sound design.</p><small>1–10 min · narrated</small></div>
+        <div class="frame"><div class="in"><video src="assets/r-survival.mp4" poster="assets/r-survival.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">05</span><h3>Survival Story</h3><p>Imagine you… stickmen in real 3D sets, rules on screen, a twist and a choice for the comments.</p><small>60–90 s · thriller</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-whiteboard.mp4" poster="assets/r-whiteboard.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">06</span><h3>Whiteboard Explainer</h3><p>Markers draw your topic live in real handwriting while a narrator explains it.</p><small>45–90 s · hand-drawn</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-teardown.mp4" poster="assets/r-teardown.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">07</span><h3>Exploded Teardown</h3><p>A studio-lit product lifts apart in 3D, every part labelled on the object.</p><small>35–75 s · 3D</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-telestrator.mp4" poster="assets/r-telestrator.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">08</span><h3>Sports Telestrator</h3><p>Your match clip, rewound and frozen, with rings, arrows and the open space drawn on.</p><small>30–75 s · your clip</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-paper_lantern.mp4" poster="assets/r-paper_lantern.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">09</span><h3>Paper-cut Lightbox</h3><p>A storyteller and a shadow-box lamp: backlit cut paper, lit windows, moonlight.</p><small>45–90 s · storytelling</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-block.mp4" poster="assets/r-block.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">10</span><h3>Block Horror</h3><p>A rule the whole town obeys, a kid who breaks it and the tall thing in the dark.</p><small>40–50 s · horror</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-build3d.mp4" poster="assets/r-build3d.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">11</span><h3>3D Build</h3><p>A yard cut open like a cake: everyday things built step by step, in 3D.</p><small>60–75 s · 3D</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-health3d.mp4" poster="assets/r-health3d.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">12</span><h3>3D Health</h3><p>Glowing organs and a vessel cut open: what your body does, step by step.</p><small>60–75 s · 3D</small></div>
+      </a>
+      <a class="fcard rv app-link" href="https://app.animave.com/login">
+        <div class="frame"><div class="in"><video src="assets/r-motion.mp4" poster="assets/r-motion.jpg" autoplay muted loop playsinline preload="none"></video></div></div>
+        <div class="meta"><span class="no">13</span><h3>Motion Graphics</h3><p>Kinetic type, charts and diagrams, animated in code and timed to the voice.</p><small>10–60 s · code-animated</small></div>
       </a>
       <a class="fcard rv app-link" href="https://app.animave.com/login">
         <div class="frame"><div class="in"><div class="art">New in the studio</div></div></div>
-        <div class="meta"><span class="no">06</span><h3>Fruit Drama</h3><p>Viral fruit-character dramas with dialogue, made for Shorts and Reels.</p><small>3–10 scenes · Veo 3.1</small></div>
-      </a>
-      <a class="fcard rv app-link" href="https://app.animave.com/login">
-        <div class="frame"><div class="in"><div class="art">New in the studio</div></div></div>
-        <div class="meta"><span class="no">07</span><h3>3D Render</h3><p>Cinematic 3D explainers: x-ray cutaways, close-ups and slow camera moves.</p><small>10–60 s · narrated</small></div>
+        <div class="meta"><span class="no">14</span><h3>3D Render</h3><p>Cinematic 3D cutaways, close-ups and slow camera moves, animated to the narration.</p><small>10–60 s · narrated</small></div>
       </a>
   </div>
 </section>
@@ -401,40 +431,39 @@ footer a:hover { color: var(--fg); }
   <div class="wrap">
     <div class="sec-head"><span class="sidx" aria-hidden="true">/03</span>
       <h2 class="rv">The whole production.<br><span class="muted">From one sentence.</span></h2>
-      <p class="lead rv">You write one sentence. Behind it, Animave runs every step a studio would, and you approve the plan before anything renders.</p>
+      <p class="lead rv">You write one sentence. Behind it, Animave runs every step a studio would, and shows you each one, with the time left, while it works.</p>
     </div>
     <div class="stages">
-<div class="stage rv"><span class="sn">01</span><h3>Script</h3><p>Your idea becomes a script with a hook, a clear structure and narration written for the format.</p></div>
-<div class="stage rv"><span class="sn">02</span><h3>Scene plan</h3><p>Every beat gets a scene: what is on screen, how the camera moves, how long it holds.</p></div>
-<div class="stage rv"><span class="sn">03</span><h3>Voice</h3><p>A natural voice reads the narration and the dialogue, in any of 29 languages.</p></div>
-<div class="stage rv"><span class="sn">04</span><h3>Visuals</h3><p>Each scene is generated and animated in your style, with the same characters throughout.</p></div>
-<div class="stage rv"><span class="sn">05</span><h3>Edit &amp; sound</h3><p>Cut to the voice, with captions, transitions and sound effects that land on the action.</p></div>
-<div class="stage rv"><span class="sn">06</span><h3>Delivery</h3><p>A finished video, vertical or horizontal, ready for YouTube, Shorts, Reels or TikTok.</p></div>
+<div class="stage rv"><span class="sn">01</span><h3>Script</h3><p>Your idea becomes a script with a hook, a clear structure and lines written for the format.</p></div>
+<div class="stage rv"><span class="sn">02</span><h3>Voice</h3><p>A natural voice, or a whole cast, reads it with the pace and the mood each line needs.</p></div>
+<div class="stage rv"><span class="sn">03</span><h3>Animation</h3><p>Claude animates every frame in code, timed to the word it belongs to.</p></div>
+<div class="stage rv"><span class="sn">04</span><h3>Frame check</h3><p>Key frames are reviewed and fixed before rendering: nothing cut off, nothing on top of the text.</p></div>
+<div class="stage rv"><span class="sn">05</span><h3>Sound</h3><p>Music under the voice and a sound effect on every action, mixed to streaming loudness.</p></div>
+<div class="stage rv"><span class="sn">06</span><h3>Delivery</h3><p>A finished 1080 × 1920 reel and a caption to post, ready for Shorts, Reels and TikTok.</p></div>
     </div>
-    <div class="you rv"><em>Your part:</em><span><i>01</i>Write the idea</span><span><i>02</i>Review the plan</span><span><i>03</i>Download the video</span></div>
+    <div class="you rv"><em>Your part:</em><span><i>01</i>Pick a format</span><span><i>02</i>Write the idea</span><span><i>03</i>Download the reel</span></div>
   </div>
 </section>
 
-<section class="sec" id="series">
+<section class="sec" id="footage">
   <div class="wrap">
     <div class="sec-head"><span class="sidx" aria-hidden="true">/04</span>
-      <h2 class="rv">Star in your own series.<br><span class="muted">Your friends are the cast.</span></h2>
-      <p class="lead rv">Turn yourself and your friends into cartoon characters, give each of them a voice and write the episode. Animave animates every scene.</p>
+      <h2 class="rv">Bring your own footage.<br><span class="muted">We make it a show.</span></h2>
+      <p class="lead rv">Upload your clips and Animave edits them like a newsroom or a match-analysis desk: captions, numbers, freezes and drawings, all timed to the voice.</p>
     </div>
     <div class="series">
       <div class="copy rv">
         <ol>
-          <li><span><b>Cast your friends</b>Upload a photo of each person and pick a style: Western Cartoon, Anime, Pixar-style 3D, Retro or Realistic.</span></li>
-          <li><span><b>Give them a voice</b>Choose a voice for every character and write their lines.</span></li>
-          <li><span><b>Write the episode</b>Scene by scene: where it happens, who is in it, what they do and say.</span></li>
-          <li><span><b>Watch it come alive</b>Every scene is animated with your characters talking and moving. Then make the next one.</span></li>
+          <li><span><b>Caption News</b>Your clips or photos under huge captions, rolling numbers and a source on every figure. No footage? We find openly licensed archive footage and credit it on screen.</span></li>
+          <li><span><b>Sports Telestrator</b>Upload a match clip: it plays, rewinds and freezes while rings, arrows and the open space are drawn on the picture.</span></li>
+          <li><span><b>Your brand, your handle</b>Premium Faceless reels take your colour and end on your handle.</span></li>
         </ol>
-        <a class="arrow-link app-link" href="https://app.animave.com/login">Start your series<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-        <p class="fine">Only use photos of people who agreed to be in your series.</p>
+        <a class="arrow-link app-link" href="https://app.animave.com/login">Upload a clip<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <p class="fine">Only upload footage you have the rights to use.</p>
       </div>
-      <div class="frame f1 rv"><div class="in"><img src="assets/photo-input.jpg" alt="A photo of two friends" loading="lazy"></div><span class="cap">Your photo</span></div>
-      <div class="frame f2 rv"><div class="in"><img src="assets/photo-cartoon.jpg" alt="The same friends as cartoon characters" loading="lazy"></div><span class="cap">Your characters</span></div>
-      <div class="frame f3 rv"><div class="in"><video src="assets/photo-animated.mp4" poster="assets/photo-animated.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">Your episode</span></div>
+      <div class="frame f1 rv"><div class="in"><video src="assets/r-caption_news.mp4" poster="assets/r-caption_news.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">Caption News</span></div>
+      <div class="frame f2 rv"><div class="in"><video src="assets/r-telestrator.mp4" poster="assets/r-telestrator.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">Sports Telestrator</span></div>
+      <div class="frame f3 rv"><div class="in"><video src="assets/r-premium.mp4" poster="assets/r-premium.jpg" autoplay muted loop playsinline preload="none"></video></div><span class="cap">Premium Faceless</span></div>
     </div>
   </div>
 </section>
@@ -443,14 +472,14 @@ footer a:hover { color: var(--fg); }
   <div class="wrap">
     <div class="sec-head"><span class="sidx" aria-hidden="true">/05</span>
       <h2 class="rv">Start free.<br><span class="muted">Pay only for what you make.</span></h2>
-      <p class="lead rv">Every plan unlocks every format, 1080p and all voices. Plans differ only in how many credits you get.</p>
+      <p class="lead rv">Every plan unlocks every format, 1080p and all voices. Plans differ only in how many credits you get, and every format shows its price before you start.</p>
     </div>
     <div class="plans">
       <div class="plan rv">
         <div class="pn"><em>Free</em></div>
         <div class="pp">$0<small></small></div>
         <p class="pd">Try every format with no commitment.</p>
-        <div class="pm"><p>500 credits make about</p><div><span>Motion Graphics</span><span>1 × 15 s</span></div><div><span>Whiteboard</span><span>2 min</span></div></div>
+        <div class="pm"><p>500 credits make about</p><div><span>Explainer</span><span>2 reels</span></div><div><span>Premium Faceless</span><span>1 reel</span></div></div>
         <ul><li>500 credits on signup</li><li>Every format</li><li>Up to 1080p</li><li>All voices</li></ul>
         <a class="arrow-link app-link" href="https://app.animave.com/login">Start free<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       </div>
@@ -458,7 +487,7 @@ footer a:hover { color: var(--fg); }
         <div class="pn"><em>Starter</em><span class="pop">Popular</span></div>
         <div class="pp">$15<small>/ month</small></div>
         <p class="pd">For creators just getting started.</p>
-        <div class="pm"><p>5,000 credits make about</p><div><span>Motion Graphics</span><span>10 × 15 s</span></div><div><span>Whiteboard</span><span>27 min</span></div><div><span>Animated Story</span><span>7 min</span></div><div><span>Fruit Drama</span><span>3 × 5 scenes</span></div></div>
+        <div class="pm"><p>5,000 credits make about</p><div><span>Explainer</span><span>25 reels</span></div><div><span>Premium Faceless</span><span>16 reels</span></div><div><span>3D Build</span><span>10 reels</span></div><div><span>Survival Story</span><span>8 reels</span></div></div>
         <ul><li>5,000 credits every month</li><li>Every format</li><li>Up to 1080p</li><li>All voices</li><li>Credits never expire</li></ul>
         <a class="arrow-link app-link" href="https://app.animave.com/login">Get Starter<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       </div>
@@ -466,7 +495,7 @@ footer a:hover { color: var(--fg); }
         <div class="pn"><em>Pro</em></div>
         <div class="pp">$49<small>/ month</small></div>
         <p class="pd">For regular creators and small studios.</p>
-        <div class="pm"><p>20,000 credits make about</p><div><span>Motion Graphics</span><span>43 × 15 s</span></div><div><span>Whiteboard</span><span>111 min</span></div><div><span>Animated Story</span><span>29 min</span></div><div><span>Fruit Drama</span><span>14 × 5 scenes</span></div></div>
+        <div class="pm"><p>20,000 credits make about</p><div><span>Explainer</span><span>100 reels</span></div><div><span>Premium Faceless</span><span>66 reels</span></div><div><span>3D Build</span><span>40 reels</span></div><div><span>Survival Story</span><span>33 reels</span></div></div>
         <ul><li>20,000 credits every month</li><li>Every format</li><li>Up to 1080p</li><li>All voices</li><li>Credits never expire</li></ul>
         <a class="arrow-link app-link" href="https://app.animave.com/login">Get Pro<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       </div>
@@ -474,7 +503,7 @@ footer a:hover { color: var(--fg); }
         <div class="pn"><em>Studio</em></div>
         <div class="pp">$149<small>/ month</small></div>
         <p class="pd">For studios and power users.</p>
-        <div class="pm"><p>60,000 credits make about</p><div><span>Motion Graphics</span><span>129 × 15 s</span></div><div><span>Whiteboard</span><span>333 min</span></div><div><span>Animated Story</span><span>88 min</span></div><div><span>Fruit Drama</span><span>42 × 5 scenes</span></div></div>
+        <div class="pm"><p>60,000 credits make about</p><div><span>Explainer</span><span>300 reels</span></div><div><span>Premium Faceless</span><span>200 reels</span></div><div><span>3D Build</span><span>120 reels</span></div><div><span>Survival Story</span><span>100 reels</span></div></div>
         <ul><li>60,000 credits every month</li><li>Every format</li><li>Up to 1080p</li><li>All voices</li><li>Credits never expire</li></ul>
         <a class="arrow-link" href="mailto:animave@gmail.com">Contact us<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       </div>
@@ -487,13 +516,13 @@ footer a:hover { color: var(--fg); }
   <div class="wrap faq">
     <h2 class="rv">Questions,<br><span class="muted">answered.</span></h2>
     <div class="list rv">
-<details open><summary>How long does a video take?<i></i></summary><p>Most short videos are ready in a few minutes. Longer stories take longer, because every scene is written, voiced, animated and edited; you can follow each scene as it finishes.</p></details>
-<details><summary>How do credits work?<i></i></summary><p>Each format has its own price in credits, and you see it before you start: a 15-second Motion Graphics video is 465 credits, a one-minute Whiteboard video 180. Credits never expire.</p></details>
+<details open><summary>How long does a reel take?<i></i></summary><p>Most reels are ready in 4 to 12 minutes, depending on the format: 3D formats take the longest. While it works you see every step and an estimate of the time left.</p></details>
+<details><summary>How do credits work?<i></i></summary><p>Each format has a fixed price in credits that you see before you start: an Explainer is 200 credits, a Premium Faceless reel 300, a Survival Story 600. If a reel fails to start, the credits go back to you. Credits never expire.</p></details>
 <details><summary>Who owns the videos I make?<i></i></summary><p>You do. All videos generated on Animave are fully owned by you and can be used commercially without restriction.</p></details>
-<details><summary>Can I use my own face or someone else's likeness?<i></i></summary><p>You can upload a photo to create a character based on your likeness. You are responsible for having the right to use any likeness you upload. Uploaded photos are not stored after the generation is complete.</p></details>
-<details><summary>Which formats and styles are there?<i></i></summary><p>Seven formats: Storytelling, Motion Graphics, Animated Story, Whiteboard, 2D Animation, Fruit Drama and 3D Render. Visual styles include Western Cartoon, Anime, Pixar-style 3D, Retro and Realistic.</p></details>
-<details><summary>Can I make videos in other languages?<i></i></summary><p>Yes. Voices speak 29 languages. Write the script or the dialogue in any of them and the selected voice reads it naturally.</p></details>
-<details><summary>Vertical or horizontal?<i></i></summary><p>Both. Make 9:16 for Shorts, Reels and TikTok, or 16:9 for YouTube.</p></details>
+<details><summary>Can I use my own footage?<i></i></summary><p>Yes, in Caption News (optional) and Sports Telestrator (your match clip). Only upload footage you have the rights to use. When Caption News uses archive footage, it is openly licensed and credited on screen.</p></details>
+<details><summary>Which formats are there?<i></i></summary><p>Fourteen: Premium Faceless, Explainer, Sci-Fi Sitcom Toon, Caption News, Survival Story, Whiteboard Explainer, Exploded Teardown, Sports Telestrator, Paper-cut Lightbox, Block Horror, 3D Build, 3D Health, Motion Graphics and 3D Render.</p></details>
+<details><summary>Which languages?<i></i></summary><p>Reels are written and voiced in English.</p></details>
+<details><summary>Vertical or horizontal?<i></i></summary><p>Every reel is vertical 9:16 in 1080p, made for Shorts, Reels and TikTok.</p></details>
 <details><summary>What happens if I run out of credits?<i></i></summary><p>You can buy a credit pack at any time without changing your plan. Credits are added instantly.</p></details>
     </div>
   </div>
@@ -501,7 +530,7 @@ footer a:hover { color: var(--fg); }
 
 <section class="closing">
   <div class="wrap">
-    <h2 class="rv">Your next video<br><span class="muted">starts with one sentence.</span></h2>
+    <h2 class="rv">Your next reel<br><span class="muted">starts with one sentence.</span></h2>
     <div class="acts rv">
       <a class="pill app-link" href="https://app.animave.com/login">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
       <a class="arrow-link" href="#pricing">See pricing<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -557,7 +586,7 @@ footer a:hover { color: var(--fg); }
 
   // who it's for: rotate the audiences every few seconds; the tabs pick one
   (function () {
-    var list = [{t:"For Creators",d:"Shorts, Reels and long-form YouTube, without an edit suite."},{t:"For Educators",d:"Lessons drawn and explained line by line, in 29 languages."},{t:"For Brands",d:"Explainers, launches and numbers that move, in your colours."},{t:"For Storytellers",d:"Characters that stay the same from the first scene to the last."}];
+    var list = [{t:"For Creators",d:"A new reel every day, without a camera or an edit suite."},{t:"For Educators",d:"Any topic drawn and explained on a whiteboard, word by word."},{t:"For Brands",d:"Faceless reels in your colour, with live UI and your handle."},{t:"For Storytellers",d:"Tales told in backlit paper, thrillers and sitcoms with a cast."}];
     var vids = document.querySelectorAll('.audience .media video'), tabs = document.querySelectorAll('.audience .who button');
     var idx = document.getElementById('whoIdx'), title = document.getElementById('whoTitleCard'), text = document.getElementById('whoText'), cur = 0, timer;
     function show(i) {
